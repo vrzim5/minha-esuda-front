@@ -7,6 +7,7 @@ import GetStarted from "./src/screens/GetStarted";
 import Home from "./src/screens/Home";
 import Scan from "./src/screens/Scan";
 import AddDocument from "./src/screens/AddDocument";
+import DocumentDetails from "./src/screens/DocumentDetails";
 
 const Stack = createStackNavigator();
 
@@ -21,6 +22,7 @@ const App = () => {
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Scan" component={Scan} />
         <Stack.Screen name="AddDocument" component={AddDocument} />
+        <Stack.Screen name="DocumentDetails" component={DocumentDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
