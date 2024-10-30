@@ -1,7 +1,17 @@
 // screens/Scan.js
 import React, { useEffect, useState } from "react";
-import { Button, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  Button,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Dimensions,
+} from "react-native";
 import { CameraView, Camera } from "expo-camera";
+
+const { width } = Dimensions.get("window");
+const CAMERA_SIZE = width * 0.7;
 
 const Scan = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -33,13 +43,16 @@ const Scan = ({ navigation }) => {
       <Text style={styles.text}>
         Escaneie o QR Code presente no seu documento estudantil.
       </Text>
-      <CameraView
-        onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
-        barcodeScannerSettings={{
-          barcodeTypes: ["qr", "pdf417"],
-        }}
-        style={StyleSheet.absoluteFillObject}
-      />
+      <View style={styles.cameraContainer}>
+        <CameraView
+          onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+          barcodeScannerSettings={{
+            barcodeTypes: ["qr", "pdf417"],
+          }}
+          style={styles.camera}
+          ratio="1:1"
+        />
+      </View>
       {scanned && (
         <Button
           title={"Toque para escanear novamente"}
@@ -50,7 +63,7 @@ const Scan = ({ navigation }) => {
         style={styles.cancelButton}
         onPress={() => navigation.goBack()}
       >
-        <Text style={styles.cancelButtonText}>X</Text>
+        <Text style={styles.cancelButtonText}>Cancelar</Text>
       </TouchableOpacity>
     </View>
   );
@@ -68,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+    paddingLeft: 10,
   },
   text: {
     fontSize: 16,
@@ -80,11 +94,20 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     position: "absolute",
-    top: 40,
+    bottom: 40,
     right: 20,
     backgroundColor: "red",
-    borderRadius: 50,
+    borderRadius: 10,
     padding: 10,
+  },
+  cameraContainer: {
+    width: CAMERA_SIZE,
+    height: CAMERA_SIZE,
+    overflow: "hidden",
+    borderRadius: 10,
+  },
+  camera: {
+    flex: 1,
   },
   cancelButtonText: {
     color: "#fff",
