@@ -6,9 +6,14 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Home = ({ navigation }) => {
   const [documents, setDocuments] = useState([]);
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("token");
+    navigation.replace("Login");
+  };
 
   return (
     <View style={styles.container}>
