@@ -7,7 +7,6 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  ImageBackground,
   Image
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -62,16 +61,17 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-        {/* Imagem sobre o banner */}
+      {/* Imagem sobre o banner */}
+      <View style={styles.logoContainer}>
         <Image
-          source={require('../../assets/logo_branca.png')} // Substitua com o caminho da sua imagem
+          source={require('../../assets/LogoEsuda.png')} // Logo Esuda
           style={styles.overlayImage}
-        >
-      </Image>
+        />
+      </View>
 
       {/* Formulário de login */}
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Login</Text>
+        <Text style={styles.title}>Logar</Text>
 
         <TextInput
           style={styles.input}
@@ -100,7 +100,7 @@ const Login = ({ navigation }) => {
 
         <Text style={styles.Text}>Não tem uma conta?</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-        <Text style={styles.linkText}>Cadastre-se</Text>
+          <Text style={styles.linkText}>Cadastre-se</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -108,44 +108,45 @@ const Login = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  container: { //Background
     flex: 1,
-    backgroundColor: "#DB914A", // Cor de fundo verde para a tela inteira
-    justifyContent: "flex-start", // Garantir que o conteúdo comece do topo
+    backgroundColor: "#DB914A", // Cor de fundo
+    justifyContent: "flex-start", // Começar o conteúdo do topo
+  },
+  logoContainer: { //Container para o Logo esuda - Serve para deixar a logo no meio sem interferir em outros elementos
+    flex: 1,  // Faz com que a logo ocupe o espaço disponível
+    justifyContent: "center",  // Alinha verticalmente ao centro
+    alignItems: "center",  // Alinha horizontalmente ao centro
+    position: 'relative',
   },
   overlayImage: {
+    marginTop: "10%",
     width: 200, // Ajuste o tamanho da imagem conforme necessário
     height: 200,
-    position: "center", // A imagem vai ser posicionada sobre o conteúdo
-    top: 100, // Ajuste a posição vertical para centralizar um pouco mais
-    left: "46%", // Posiciona a imagem no meio da tela horizontalmente
-    transform: [{ translateX: -75 }], // Move a imagem para a esquerda para centralizar (metade da largura da imagem)
-    zIndex: 1, // A imagem fica acima do conteúdo
     resizeMode: 'contain', // A imagem vai se ajustar dentro do espaço disponível sem distorcer
   },
-  
   formContainer: {
-    flex: 1, // Permite que o formulário ocupe a parte restante da tela
-    marginTop: 200, // Deixa o formulário começar após o banner (ajuste conforme necessário)
-    width: "100%", // O formulário vai ocupar 100% da largura da tela
-    backgroundColor: "#fff",  // Cor de fundo branco para o formulário
-    borderTopRightRadius: 110,  // Arredondamento no canto superior direito
-    padding: 50,  // Adiciona espaçamento interno
-    shadowColor: "#000",  // Adiciona uma sombra
+    flex: 2, // Permite que o formulário ocupe o restante do espaço
+    marginTop: -50,  // Ajusta a posição do formulário para um alinhamento mais adequado
+    width: "100%",
+    top: 99,
+    backgroundColor: "#fff",
+    borderTopRightRadius: 110,
+    padding: 50,
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 5,  // Sombra para Android
-    zIndex: 1, // Garante que o formulário fique acima do banner
+    elevation: 5, // Sombra para Android
   },
   title: {
     fontSize: 50,
     fontWeight: "bold",
     marginBottom: 24,
-    textAlign: 'center',  // Centraliza o título
+    textAlign: 'center',
   },
   input: {
     width: "100%",
@@ -158,34 +159,35 @@ const styles = StyleSheet.create({
     color: "#808080",
   },
   button: {
-    backgroundColor: "#61B375", // Cor do botão
-    paddingVertical: 10, // Espaçamento vertical para o botão
-    paddingHorizontal: 40, // Menos espaçamento horizontal, deixando o botão mais estreito
+    backgroundColor: "#61B375",
+    paddingVertical: 10,
+    paddingHorizontal: 40,
     borderRadius: 8,
     marginTop: 20,
     marginHorizontal: 50,
-    alignItems: "center", // Centraliza o texto no botão
+    alignItems: "center",
     justifyContent: "center",
   },
   buttonText: {
-    color: "#fff", // Cor do texto do botão
+    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
   linkText: {
     color: "#DB914A",
     marginTop: 16,
-    textAlign: "center",  // Centraliza o texto
+    textAlign: "center",
     fontWeight: "bold",
-    top: -35, // Ajuste a posição vertical para centralizar um pouco mais
-    left: 70,
+    top: "-100%",
+    left: "20%",
   },
   Text: {
     color: "#000",
     marginTop: 16,
-    textAlign: "center",  // Centraliza o texto
+    textAlign: "center",
     fontWeight: "bold",
-    left: -40,
+    top: "auto",
+    left: "-12%",
   },
 });
 
