@@ -1,83 +1,80 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  FlatList,
-} from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-const Home = ({ navigation }) => {
-  const [documents, setDocuments] = useState([]);
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem("token");
-    navigation.replace("Login");
-  };
-
+const GetStarted = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Seus Documentos</Text>
-      {documents.length === 0 ? (
-        <View style={styles.placeholder}>
-          {/* Placeholder Image */}
-          <Text>Você ainda não adicionou nenhum documento.</Text>
-        </View>
-      ) : (
-        <FlatList
-          data={documents}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("DocumentDetails", { item })}
-            >
-              {/* DocumentCard component */}
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.id}
-        />
-      )}
+      {/* Título "Bem-vindo(a) ao Minha Esuda" */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Bem-vindo(a)</Text>
+        <Text style={styles.title}>ao Minha Esuda</Text>
+      </View>
+
+      {/* Imagem "carteirinha.png" */}
+      <Image
+        source={require('../../assets/carteirinha.png')} // Substitua com o caminho correto da sua imagem
+        style={styles.image}
+      />
+
+      {/* Texto abaixo da imagem */}
+      <Text style={styles.subtitle}>Sua carteira estudantil toda digital</Text>
+
+      {/* Botão Começar */}
       <TouchableOpacity
-        style={styles.addButton}
-        onPress={() => navigation.navigate("Scan")}
+        style={styles.button}
+        onPress={() => navigation.navigate("Login")}
       >
-        <Text style={styles.addButtonText}>+</Text>
+        <Text style={styles.buttonText}>Começar</Text>
       </TouchableOpacity>
     </View>
   );
 };
 
-// Add styles here
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    alignItems: "center",
     padding: 20,
+    backgroundColor: "#DB914A", // Cor de fundo laranja
+  },
+  titleContainer: {
+    width: "100%",
+    alignItems: "flex-start", // Alinha o texto à esquerda
+    marginTop: "30%",
+    marginBottom: -80,
   },
   title: {
-    fontSize: 24,
+    fontSize: 50,
     fontWeight: "bold",
-    marginBottom: 20,
-  },
-  placeholder: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  addButton: {
-    position: "absolute",
-    bottom: 30,
-    right: 30,
-    backgroundColor: "#007BFF",
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  addButtonText: {
     color: "#fff",
-    fontSize: 30,
-    lineHeight: 30,
+    textAlign: "left", // Título alinhado à esquerda
+  },
+  image: {
+    width: 500, // Ajuste o tamanho da imagem conforme necessário
+    height: 500,
+    resizeMode: "contain",
+    marginBottom: -120,
+  },
+  subtitle: {
+    fontSize: 20,
+    color: "#fff", // Cor branca para o texto abaixo da imagem
+    textAlign: "center", // Texto centralizado
+    marginBottom: 90,
+  },
+  button: {
+    backgroundColor: "#61B375", // Cor do botão
+    paddingVertical: 15,
+    paddingHorizontal: 80,
+    borderRadius: 50,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 25,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
-export default Home;
+
+export default GetStarted;
