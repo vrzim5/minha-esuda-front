@@ -1,19 +1,28 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
 const GetStarted = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* Animated Card */}
-      <View style={styles.card}>{/* Implement animation here */}</View>
-      <Text style={styles.title}>Seu documento estudantil todo digital.</Text>
-      <Text style={styles.paragraph}>
-        Digitalize seu Documento Nacional do Estudante válido através do QR Code
-        e tenha ele sempre disponível no seu dispositivo!
-      </Text>
+      {/* Título "Bem-vindo(a) ao Minha Esuda" */}
+      <View style={styles.titleContainer}>
+        <Text style={styles.title}>Bem-vindo(a)</Text>
+        <Text style={styles.title}>ao Minha Esuda</Text>
+      </View>
+
+      {/* Imagem "carteirinha.png" */}
+      <Image
+        source={require('../../assets/carteirinha.png')} //colocar a PNG da carteirinha na pasta assests com o nome "carteirinha.png"
+        style={styles.image}
+      />
+
+      {/* Texto abaixo da imagem */}
+      <Text style={styles.subtitle}>Sua carteira estudantil toda digital</Text>
+
+      {/* Botão Começar */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Home")}
+        onPress={() => navigation.navigate("Login")}
       >
         <Text style={styles.buttonText}>Começar</Text>
       </TouchableOpacity>
@@ -25,43 +34,44 @@ const GetStarted = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "#DB914A", // Cor de fundo laranja
   },
-  card: {
+  titleContainer: {
     width: "100%",
-    height: 200,
-    backgroundColor: "#f8f8f8",
-    borderRadius: 10,
-    marginBottom: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    // Add additional styles for the animated card here
+    alignItems: "flex-start", // Alinha o texto à esquerda
+    marginTop: "30%",
+    marginBottom: -80,
   },
   title: {
-    fontSize: 24,
+    fontSize: 50,
     fontWeight: "bold",
-    color: "#333",
-    marginBottom: 10,
-    textAlign: "center",
+    color: "#fff",
+    textAlign: "left", // Título alinhado à esquerda
   },
-  paragraph: {
-    fontSize: 16,
-    color: "#666",
-    textAlign: "center",
-    marginBottom: 20,
+  image: {
+    width: 500, // Ajuste o tamanho da imagem conforme necessário
+    height: 500,
+    resizeMode: "contain",
+    marginBottom: -120,
+  },
+  subtitle: {
+    fontSize: 20,
+    color: "#fff", // Cor branca para o texto abaixo da imagem
+    textAlign: "center", // Texto centralizado
+    marginBottom: 90,
   },
   button: {
-    backgroundColor: "#007BFF",
+    backgroundColor: "#61B375", // Cor do botão
     paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 5,
+    paddingHorizontal: 80,
+    borderRadius: 50,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 16,
+    fontSize: 25,
     fontWeight: "bold",
     textAlign: "center",
   },
