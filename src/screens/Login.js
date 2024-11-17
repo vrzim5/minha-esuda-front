@@ -64,7 +64,7 @@ const Login = ({ navigation }) => {
       {/* Imagem sobre o banner */}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../../assets/LogoEsuda.png')} // Substitua com o caminho da sua imagem
+          source={require('../assets/LogoEsuda.png')} // Substitua com o caminho da sua imagem
           style={styles.overlayImage}
         />
       </View>
