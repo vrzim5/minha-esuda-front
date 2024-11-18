@@ -2,14 +2,16 @@ import React, { useState } from "react";
 import {
   View,
   Text,
+  FlatList,
   StyleSheet,
   TouchableOpacity,
-  FlatList,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Ionicons } from "@expo/vector-icons";
 
 const Home = ({ navigation }) => {
   const [documents, setDocuments] = useState([]);
+
   const handleLogout = async () => {
     await AsyncStorage.removeItem("token");
     navigation.replace("Login");
@@ -17,11 +19,18 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={handleLogout}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+      </View>
       <Text style={styles.title}>Seus Documentos</Text>
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
-          {/* Placeholder Image */}
-          <Text>Você ainda não adicionou nenhum documento.</Text>
+          <Ionicons name="document-text-outline" size={100} color="#DB914A" style={styles.placeholderIcon} />
+          <Text style={styles.placeholderText}>
+            Nenhum documento foi adicionado ainda
+          </Text>
         </View>
       ) : (
         <FlatList
@@ -31,6 +40,7 @@ const Home = ({ navigation }) => {
               onPress={() => navigation.navigate("DocumentDetails", { item })}
             >
               {/* DocumentCard component */}
+              <Text>{item.name}</Text>
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item.id}
@@ -40,44 +50,49 @@ const Home = ({ navigation }) => {
         style={styles.addButton}
         onPress={() => navigation.navigate("Scan")}
       >
-        <Text style={styles.addButtonText}>+</Text>
+        <Ionicons name="add-circle" size={60} color="#DB914A" />
       </TouchableOpacity>
     </View>
   );
 };
 
-// Add styles here
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    padding: 20,
+    backgroundColor: "#f5f5f5",
+  },
+  header: {
+    width: "100%",
+    height: 50,
+    backgroundColor: "#DB914A",
+    justifyContent: "center",
+    paddingHorizontal: 16,
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
+    textAlign: "center",
+    color: "#000",
+    marginVertical: 24,
   },
   placeholder: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
   },
+  placeholderIcon: {
+    opacity: 0.3,
+    marginBottom: 20,
+  },
+  placeholderText: {
+    color: "#DB914A",
+    fontSize: 16,
+  },
   addButton: {
     position: "absolute",
     bottom: 30,
     right: 30,
-    backgroundColor: "#007BFF",
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  addButtonText: {
-    color: "#fff",
-    fontSize: 30,
-    lineHeight: 30,
   },
 });
+
 export default Home;
