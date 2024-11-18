@@ -12,7 +12,7 @@ const GetStarted = ({ navigation }) => {
 
       {/* Imagem "carteirinha.png" */}
       <Image
-        source={require('../../assets/carteirinha.png')} //colocar a PNG da carteirinha na pasta assests com o nome "carteirinha.png"
+        source={require('../assets/carteirinha.png')} //colocar a PNG da carteirinha na pasta assests com o nome "carteirinha.png"
         style={styles.image}
       />
 
