@@ -27,7 +27,12 @@ const Home = ({ navigation }) => {
       <Text style={styles.title}>Seus Documentos</Text>
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
-          <Ionicons name="document-text-outline" size={100} color="#DB914A" style={styles.placeholderIcon} />
+          <Ionicons
+            name="document-text-outline"
+            size={100}
+            color="#DB914A"
+            style={styles.placeholderIcon}
+          />
           <Text style={styles.placeholderText}>
             Nenhum documento foi adicionado ainda
           </Text>
