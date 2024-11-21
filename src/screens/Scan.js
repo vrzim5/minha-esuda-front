@@ -1,4 +1,3 @@
-// screens/Scan.js
 import React, { useEffect, useState } from "react";
 import {
   Button,
@@ -9,6 +8,7 @@ import {
   Dimensions,
 } from "react-native";
 import { CameraView, Camera } from "expo-camera";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 const CAMERA_SIZE = width * 0.7;
@@ -39,54 +39,74 @@ const Scan = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Scan</Text>
-      <Text style={styles.text}>
-        Escaneie o QR Code presente no seu documento estudantil.
-      </Text>
-      <View style={styles.cameraContainer}>
-        <CameraView
-          onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
-          barcodeScannerSettings={{
-            barcodeTypes: ["qr", "pdf417"],
-          }}
-          style={styles.camera}
-          ratio="1:1"
-        />
+      <View style={styles.header}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.replace("Home")}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
       </View>
-      {scanned && (
-        <Button
-          title={"Toque para escanear novamente"}
-          onPress={() => setScanned(false)}
-        />
-      )}
-      <TouchableOpacity
-        style={styles.cancelButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.cancelButtonText}>Cancelar</Text>
-      </TouchableOpacity>
+
+      <Text style={styles.title}>Escaneie o seu documento</Text>
+      <Text style={styles.description}>
+        Escaneie o QR code presente no seu documento
+      </Text>
+      <View style={styles.scannerContainer}>
+        <View style={styles.cameraContainer}>
+          <CameraView
+            onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
+            barcodeScannerSettings={{
+              barcodeTypes: ["qr", "pdf417"],
+            }}
+            style={styles.camera}
+            ratio="1:1"
+          />
+        </View>
+        {scanned && (
+          <Button
+            title={"Toque para escanear novamente"}
+            onPress={() => setScanned(false)}
+          />
+        )}
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="close-circle" size={60} color="#DB914A" />
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
-// Add styles here
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
+  header: {
+    width: "100%",
+    height: 100,
+    backgroundColor: "#DB914A",
     justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
+    paddingHorizontal: 16,
+  },
+  backButton: {
+    position: "absolute",
+    left: 16,
+    top: "60%",
+    transform: [{ translateY: -12 }], 
   },
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 20,
-    paddingLeft: 10,
+    textAlign: "center",
+    color: "#000",
+    marginVertical: 24,
   },
-  text: {
+  description: {
     fontSize: 16,
     textAlign: "center",
-    marginBottom: 20,
+    color: "#DB914A",
+    marginBottom: 24,
   },
   scanner: {
     width: "100%",
@@ -94,11 +114,13 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     position: "absolute",
-    bottom: 40,
-    right: 20,
-    backgroundColor: "red",
-    borderRadius: 10,
-    padding: 10,
+    bottom: 30,
+    right: 30,
+  },
+  scannerContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   cameraContainer: {
     width: CAMERA_SIZE,
@@ -115,4 +137,5 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
 });
+
 export default Scan;

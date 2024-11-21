@@ -20,14 +20,19 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={handleLogout}>
+        <TouchableOpacity style={styles.backButton} onPress={handleLogout}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
       <Text style={styles.title}>Seus Documentos</Text>
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
-          <Ionicons name="document-text-outline" size={100} color="#DB914A" style={styles.placeholderIcon} />
+          <Ionicons
+            name="document-text-outline"
+            size={100}
+            color="#DB914A"
+            style={styles.placeholderIcon}
+          />
           <Text style={styles.placeholderText}>
             Nenhum documento foi adicionado ainda
           </Text>
@@ -63,10 +68,16 @@ const styles = StyleSheet.create({
   },
   header: {
     width: "100%",
-    height: 50,
+    height: 100,
     backgroundColor: "#DB914A",
     justifyContent: "center",
     paddingHorizontal: 16,
+  },
+  backButton: {
+    position: "absolute",
+    left: 16,
+    top: "60%",
+    transform: [{ translateY: -12 }], 
   },
   title: {
     fontSize: 24,
