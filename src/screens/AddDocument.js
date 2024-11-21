@@ -16,8 +16,8 @@ const AddDocument = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Adicionar</Text>
-      <Text style={styles.text}>Verifique as informações do seu documento</Text>
+      <Text style={styles.title}>Adicionar documento</Text>
+      <Text style={styles.text}>Verifique se as informações do seu documento estão corretas</Text>
       {/* Display document card with documentInfo */}
       <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
         <Text style={styles.addButtonText}>Adicionar</Text>

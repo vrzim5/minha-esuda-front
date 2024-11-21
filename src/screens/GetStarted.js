@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 const GetStarted = ({ navigation }) => {
   return (
     <View style={styles.container}>
-      {/* Título "Bem-vindo(a) ao Minha Esuda" */}
+      {/* Título */}
       <View style={styles.titleContainer}>
         <Text style={styles.title}>Bem-vindo(a)</Text>
         <Text style={styles.title}>ao Minha Esuda</Text>
@@ -12,7 +12,7 @@ const GetStarted = ({ navigation }) => {
 
       {/* Imagem "carteirinha.png" */}
       <Image
-        source={require('../assets/carteirinha.png')} //colocar a PNG da carteirinha na pasta assests com o nome "carteirinha.png"
+        source={require('../assets/carteirinha.png')} 
         style={styles.image}
       />
 
@@ -30,7 +30,6 @@ const GetStarted = ({ navigation }) => {
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
