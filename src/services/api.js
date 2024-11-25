@@ -13,6 +13,7 @@ export const loginUser = async (email, password) => {
     return { success: false, message: error.response.data.message };
   }
 };
+
 export const registerUser = async (email, password) => {
   try {
     const response = await api.post("/api/auth/signup", { email, password });
@@ -21,7 +22,6 @@ export const registerUser = async (email, password) => {
     return { success: false, message: error.response.data.message };
   }
 };
-
 
 export const getDocumentData = async (qrCodeData) => {
   try {

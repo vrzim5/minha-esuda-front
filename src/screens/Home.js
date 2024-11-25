@@ -20,11 +20,18 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleLogout}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={handleLogout}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Voltar"
+          accessibilityHint="Toque uma vez para voltar para a tela de login"
+        >
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
-      <Text style={styles.title}>Seus Documentos</Text>
+      <Text style={styles.title} accessible={true} accessibilityRole="header" accessibilityLabel="Seus Documentos">Seus Documentos</Text>
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
           <Ionicons
@@ -33,7 +40,10 @@ const Home = ({ navigation }) => {
             color="#DB914A"
             style={styles.placeholderIcon}
           />
-          <Text style={styles.placeholderText}>
+          <Text style={styles.placeholderText}
+            accessible={true}
+            accessibilityLabel="Nenhum documento foi adicionado ainda"
+          >
             Nenhum documento foi adicionado ainda
           </Text>
         </View>
@@ -42,7 +52,11 @@ const Home = ({ navigation }) => {
           data={documents}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("DocumentDetails", { item })}
+              onPress={() => navigation.navigate("DocumentDetails", { item })} 
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Documento ${item.name}`}
+              accessibilityHint="Toque uma vez para ver os detalhes do documento"
             >
               {/* DocumentCard component */}
               <Text>{item.name}</Text>
@@ -54,6 +68,10 @@ const Home = ({ navigation }) => {
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => navigation.navigate("Scan")}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel="Escanear documento"
+        accessibilityHint="Toque uma vez para escanear um novo documento"
       >
         <Ionicons name="add-circle" size={60} color="#DB914A" />
       </TouchableOpacity>

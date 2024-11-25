@@ -29,19 +29,19 @@ const Signup = ({ navigation }) => {
       return;
     }
 
-    // Verificar se o e-mail é um e-mail institucional Esuda
+    // Verifica se o e-mail é um e-mail institucional Esuda
     if (!isValidEmail(email)) {
       Alert.alert("Erro", "Esse e-mail não é um e-mail institucional Esuda.");
       return;
     }
 
-    // Verificar se a senha tem pelo menos 8 caracteres
+    // Verifica se a senha tem pelo menos 8 caracteres
     if (password.length < 8) {
       Alert.alert("Erro", "A senha deve conter pelo menos 8 caracteres.");
       return;
     }
 
-    // Verificar se as senhas coincidem
+    // Verifica se as senhas coincidem
     if (password !== confirmPassword) {
       Alert.alert("Erro", "As senhas não coincidem.");
       return;
@@ -69,28 +69,34 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Imagem sobre o banner */}
+      {/* Imagem */}
       <View style={styles.logoContainer}>
         <Image
-          source={require('../assets/LogoEsuda.png')} // Substitua com o caminho da sua imagem
+          source={require('../assets/LogoEsuda.png')}
           style={styles.overlayImage}
         />
       </View>
 
       {/* Formulário de cadastro */}
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Cadastrar</Text>
+        <Text style={styles.title} accessible={true} accessibilityRole="header">Cadastrar</Text>
         <TextInput
           style={styles.input}
           placeholder="Nome"
           value={nome}
           onChangeText={setNome}
+          accessible={true}
+          accessibilityLabel="Nome"
+          accessibilityHint="Digite seu nome completo"
         />
         <TextInput
           style={styles.input}
           placeholder="Ex: 00000000@esuda.edu.br"
           value={email}
           onChangeText={setEmail}
+          accessible={true}
+          accessibilityLabel="Email"
+          accessibilityHint="Digite seu e-mail institucional"
         />
         <TextInput
           style={styles.input}
@@ -98,6 +104,9 @@ const Signup = ({ navigation }) => {
           value={password}
           onChangeText={setPassword}
           secureTextEntry
+          accessible={true}
+          accessibilityLabel="Senha"
+          accessibilityHint="Digite sua senha"
         />
         <TextInput
           style={styles.input}
@@ -105,6 +114,9 @@ const Signup = ({ navigation }) => {
           value={confirmPassword}
           onChangeText={setConfirmPassword}
           secureTextEntry
+          accessible={true}
+          accessibilityLabel="Confirmar Senha"
+          accessibilityHint="Digite sua senha novamente"
         />
 
         {/* Botão de cadastro */}
@@ -112,6 +124,10 @@ const Signup = ({ navigation }) => {
           style={styles.button}
           onPress={handleSignup}
           disabled={loading}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Cadastrar"
+          accessibilityHint="Toque duas vezes para se cadastrar"
         >
           <Text style={styles.buttonText}>{loading ? "Carregando..." : "Cadastrar"}</Text>
         </TouchableOpacity>
@@ -120,10 +136,16 @@ const Signup = ({ navigation }) => {
 
         {/* Link para redirecionar para a tela de login */}
         <View style={styles.loginLinkContainer}>
-          <Text style={styles.Text}>Já tem uma conta? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
-            <Text style={styles.linkText}>Logar-se</Text>
-          </TouchableOpacity>
+          <Text style={styles.Text} accessible={true} accessibilityLabel="Já tem uma conta?">Já tem uma conta? </Text>
+          <TouchableOpacity
+          onPress={() => navigation.navigate("Login")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Logar-se"
+          accessibilityHint="Toque uma vez para ir para a tela de login"
+        >
+          <Text style={styles.linkText}>Logar-se</Text>
+        </TouchableOpacity>
         </View>
       </View>
     </View>

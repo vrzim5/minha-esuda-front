@@ -12,14 +12,12 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
 
-// Função para validar e-mail com o domínio específico @esuda.edu.br
+// Função para validar e-mail 
 const isValidEmail = (email) => {
-  const regex = /\S+@\S+\.\S+/; // Verifica se o e-mail tem formato válido
+  const regex = /\S+@\S+\.\S+/; 
   if (!regex.test(email)) {
-    return false; // Se não for um e-mail válido, retorna false
+    return false; 
   }
-
-  // Verifica se o e-mail termina com @esuda.edu.br
   return email.endsWith("@esuda.edu.br");
 };
 
@@ -61,23 +59,28 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Imagem sobre o banner */}
-      <View style={styles.logoContainer}>
+      {/* Imagem*/}
+      <View style={styles.logoContainer} accessible={true} accessibilityRole="image">
         <Image
-          source={require('../assets/LogoEsuda.png')} // Substitua com o caminho da sua imagem
+          source={require('../assets/LogoEsuda.png')} 
           style={styles.overlayImage}
+          accessible={true}
+          accessibilityLabel="Logo da Esuda"
         />
       </View>
 
       {/* Formulário de login */}
       <View style={styles.formContainer}>
-        <Text style={styles.title}>Logar</Text>
+        <Text style={styles.title} accessible={true} accessibilityRole="header">Logar</Text>
 
         <TextInput
           style={styles.input}
           placeholder="Ex: 00000000@esuda.edu.br"
           value={email}
           onChangeText={setEmail}
+          accessible={true}
+          accessibilityLabel="Email"
+          accessibilityHint="Digite seu e-mail institucional"
         />
         <TextInput
           style={styles.input}
@@ -85,25 +88,38 @@ const Login = ({ navigation }) => {
           value={senha}
           onChangeText={setSenha}
           secureTextEntry
+          accessible={true}
+          accessibilityLabel="Senha"
+          accessibilityHint="Digite sua senha"
         />
 
-        {/* Botão personalizado */}
+        {/* Botão */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleLogin}
           disabled={loading}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Entrar"
+          accessibilityHint="Toque uma vez para fazer login"
         >
           <Text style={styles.buttonText}>{loading ? "Carregando..." : "Entrar"}</Text>
         </TouchableOpacity>
 
         {loading && <ActivityIndicator size="large" color="#1e90ff" />}
 
-        {/* Mensagem "Não tem uma conta? Cadastre-se" lado a lado */}
+        {/* Link para redirecionar para a tela de cadastro */}
         <View style={styles.signupContainer}>
-          <Text style={styles.Text}>Não tem uma conta? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-            <Text style={styles.linkText}>Cadastre-se</Text>
-          </TouchableOpacity>
+          <Text style={styles.Text} accessible={true} accessibilityLabel="Não tem uma conta?">Não tem uma conta? </Text>
+          <TouchableOpacity
+          onPress={() => navigation.navigate("Signup")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Cadastrar-se"
+          accessibilityHint="Toque uma vez para ir para a tela de cadastro"
+        >
+          <Text style={styles.linkText}>Cadastrar-se</Text>
+        </TouchableOpacity>
         </View>
       </View>
     </View>
