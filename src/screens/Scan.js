@@ -40,13 +40,24 @@ const Scan = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={() => navigation.replace("Home")}>
+        <TouchableOpacity 
+        style={styles.backButton} 
+        onPress={() => navigation.replace("Home")}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel="Voltar"
+        accessibilityHint="Toque uma vez para voltar para a tela inicial"
+        >
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.title}>Escaneie o seu documento</Text>
-      <Text style={styles.description}>
+      <Text style={styles.title} accessible={true} accessibilityRole="header">Escaneie o seu documento</Text>
+      <Text 
+        style={styles.description}
+        accessible={true}
+        accessibilityLabel="Escaneie o QR code presente no seu documento físico"
+      >
         Escaneie o QR code presente no seu documento
       </Text>
       <View style={styles.scannerContainer}>
@@ -58,6 +69,8 @@ const Scan = ({ navigation }) => {
             }}
             style={styles.camera}
             ratio="1:1"
+            accessible={true}
+            accessibilityLabel="Visualização da câmera para escanear QR code"
           />
         </View>
         {scanned && (
@@ -69,6 +82,10 @@ const Scan = ({ navigation }) => {
         <TouchableOpacity
           style={styles.cancelButton}
           onPress={() => navigation.goBack()}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Cancelar"
+          accessibilityHint="Toque uma vez para cancelar o escaneamento"
         >
           <Ionicons name="close-circle" size={60} color="#DB914A" />
         </TouchableOpacity>

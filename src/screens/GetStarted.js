@@ -5,24 +5,32 @@ const GetStarted = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Título */}
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Bem-vindo(a)</Text>
-        <Text style={styles.title}>ao Minha Esuda</Text>
+      <View style={styles.titleContainer} accessible={true} accessibilityRole="header">
+        <Text style={styles.title} accessibilityLabel="Bem-vindo(a)">Bem-vindo(a)</Text>
+        <Text style={styles.title} accessibilityLabel="ao Minha Esuda">ao Minha Esuda</Text>
       </View>
 
-      {/* Imagem "carteirinha.png" */}
+      {/* Imagem da carteirinha (logo) */}
       <Image
-        source={require('../assets/carteirinha.png')} 
+        source={require('../assets/carteirinha.png')}
         style={styles.image}
+        accessible={true}
+        accessibilityLabel="Imagem de uma carteira estudantil"
       />
 
-      {/* Texto abaixo da imagem */}
-      <Text style={styles.subtitle}>Sua carteira estudantil toda digital</Text>
+      {/* Texto */}
+      <Text style={styles.subtitle} accessible={true} accessibilityLabel="Sua carteira estudantil toda digital">
+        Sua carteira estudantil toda digital
+      </Text>
 
       {/* Botão Começar */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Login")}
+        onPress={() => navigation.navigate("Signup")}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel="Começar"
+        accessibilityHint="Toque uma vez para ir para a tela de cadastro"
       >
         <Text style={styles.buttonText}>Começar</Text>
       </TouchableOpacity>
