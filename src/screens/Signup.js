@@ -17,14 +17,14 @@ const isValidEmail = (email) => {
 };
 
 const Signup = ({ navigation }) => {
-  const [nome, setNome] = useState("");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSignup = async () => {
-    if (!nome || !email || !password || !confirmPassword) {
+    if (!name || !email || !password || !confirmPassword) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");
       return;
     }
@@ -51,7 +51,7 @@ const Signup = ({ navigation }) => {
 
     try {
       // Chama o serviço de cadastro com o e-mail e senha
-      const response = await registerUser(email, password);
+      const response = await registerUser(email, password, name);
 
       if (response.success) {
         Alert.alert("Cadastro realizado com sucesso", "Agora você pode fazer login.");
@@ -83,8 +83,8 @@ const Signup = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Nome"
-          value={nome}
-          onChangeText={setNome}
+          value={name}
+          onChangeText={setName}
           accessible={true}
           accessibilityLabel="Nome"
           accessibilityHint="Digite seu nome completo"

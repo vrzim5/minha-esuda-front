@@ -10,24 +10,27 @@ export const loginUser = async (email, password) => {
     const response = await api.post("/api/auth/login", { email, password });
     return { success: true, data: response.data };
   } catch (error) {
-    return { success: false, message: error.response.data.message };
+    const message = error.response?.data?.message || 'Erro ao fazer login';
+    return { success: false, message };
   }
 };
 
-export const registerUser = async (email, password) => {
+export const registerUser = async (email, password, name) => {
   try {
-    const response = await api.post("/api/auth/signup", { email, password });
+    const response = await api.post("/api/auth/signup", { email, password, name });
     return { success: true, data: response.data };
   } catch (error) {
-    return { success: false, message: error.response.data.message };
+    const message = error.response?.data?.message || 'Erro ao registrar usuário';
+    return { success: false, message };
   }
 };
 
 export const getDocumentData = async (qrCodeData) => {
   try {
     const response = await api.post("/api/students", { qrCodeData });
-    return response.data;
+    return { success: true, data: response.data };
   } catch (error) {
-    console.error(error);
+    const message = error.response?.data?.message || 'Erro ao obter dados do documento';
+    return { success: false, message };
   }
 };
