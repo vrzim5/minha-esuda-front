@@ -155,24 +155,24 @@ const Signup = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#DB914A", // Cor de fundo
-    justifyContent: "flex-start", // Começar o conteúdo do topo
+    backgroundColor: "#DB914A", 
+    justifyContent: "flex-start", 
   },
   logoContainer: {
-    flex: 1,  // Faz com que a logo ocupe o espaço disponível
-    justifyContent: "center",  // Alinha verticalmente ao centro
-    alignItems: "center",  // Alinha horizontalmente ao centro
+    flex: 1,  
+    justifyContent: "center",  
+    alignItems: "center", 
     position: 'relative',
   },
   overlayImage: {
     marginTop: "10%",
-    width: 200, // Ajuste o tamanho da imagem conforme necessário
+    width: 200, 
     height: 200,
-    resizeMode: 'contain', // A imagem vai se ajustar dentro do espaço disponível sem distorcer
+    resizeMode: 'contain', 
   },
   formContainer: {
-    flex: 2, // Permite que o formulário ocupe o restante do espaço
-    marginTop: -50,  // Ajusta a posição do formulário para um alinhamento mais adequado
+    flex: 2, 
+    marginTop: -50,  
     width: "100%",
     top: 75,
     backgroundColor: "#fff",
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 5, // Sombra para Android
+    elevation: 5, 
   },
   title: {
     fontSize: 50,
@@ -219,16 +219,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   loginLinkContainer: {
-    flexDirection: 'row', // Alinha os itens horizontalmente
-    justifyContent: 'center', // Centraliza o conteúdo horizontalmente
+    flexDirection: 'row', 
+    justifyContent: 'center', 
     marginTop: 16,
   },
   linkText: {
-    color: "#DB914A", // Cor do texto "Faça login"
+    color: "#DB914A", 
     fontWeight: "bold",
   },
   Text: {
-    color: "#000", // Cor do texto "Já tem uma conta?"
+    color: "#000",
     fontWeight: "bold",
   },
 });
