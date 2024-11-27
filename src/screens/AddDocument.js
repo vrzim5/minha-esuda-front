@@ -1,20 +1,48 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from "react";
+import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { getDocumentData } from "../services/api";
+import DocumentCard from "../components/DocumentCard";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AddDocument = ({ route, navigation }) => {
   const { data } = route.params;
 
-  // Parse data to extract document info
-  const documentInfo = {
-    // Extracted fields
+  const [documentInfo, setDocumentInfo] = useState(null);
+  useEffect(() => {
+    const fetchDocumentData = async () => {
+      const parsedData = await parseDocumentData(data);
+      setDocumentInfo(parsedData);
+    };
+    fetchDocumentData();
+  }, [data]);
+
+  const parseDocumentData = async (data) => {
+    const documentData = await getDocumentData(data);
+    return {
+      _id: documentData[0]._id || "Unknown _id",
+      name: documentData[0].name || "Unknown name",
+      cpf: documentData[0].cpf || "Unknown cpf",
+      birthDate: documentData[0].birthDate || "Unknown date",
+      institution: documentData[0].institution || "Unknown institution",
+      course: documentData[0].course || "Unknown course",
+      issuer: documentData[0].issuer || "Unknown issuer",
+      validity: documentData[0].validity || "Unknown date",
+    };
   };
 
-  const handleAdd = () => {
-    // Add document to state/storage
-    navigation.navigate("Home");
+  const handleAdd = async () => {
+    try {
+      const documentList =
+        JSON.parse(await AsyncStorage.getItem("documents")) || [];
+      documentList.push(documentInfo);
+      await AsyncStorage.setItem("documents", JSON.stringify(documentList));
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("Error saving document", error);
+    }
   };
 
-  return (
+  return documentInfo ? (
     <View style={styles.container}>
       <Text style={styles.title} accessible={true} accessibilityRole="header" accessibilityLabel="Adicionar documento">Adicionar documento</Text>
       <Text
@@ -26,32 +54,7 @@ const AddDocument = ({ route, navigation }) => {
       </Text>
 
       {/* Card com as informações do documento */}
-      <View style={styles.card} accessible={true} accessibilityRole="summary">
-        <Text style={styles.cardTitle} accessible={true} accessibilityLabel="Carteira de Estudante">
-          Carteira de Estudante
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`Nome: ${documentInfo.name}`}>
-          Nome: {documentInfo.name}
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`CPF: ${documentInfo.cpf}`}>
-          CPF: {documentInfo.cpf}
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`Nascimento: ${documentInfo.birthDate}`}>
-          Nasc: {documentInfo.birthDate}
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`Instituição: ${documentInfo.institution}`}>
-          Inst: {documentInfo.institution}
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`Curso: ${documentInfo.course}`}>
-          Curso: {documentInfo.course}
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`Emissor: ${documentInfo.issuer}`}>
-          Emissor: {documentInfo.issuer}
-        </Text>
-        <Text style={styles.cardText} accessible={true} accessibilityLabel={`Validade: ${documentInfo.validity}`}>
-          Válido até: {documentInfo.validity}
-        </Text>
-      </View>
+      {documentInfo && <DocumentCard {...documentInfo} />}
 
       <TouchableOpacity 
       style={styles.addButton} 
@@ -63,6 +66,7 @@ const AddDocument = ({ route, navigation }) => {
     >
         <Text style={styles.addButtonText}>Adicionar</Text>
       </TouchableOpacity>
+
       <TouchableOpacity
         style={styles.cancelButton}
         onPress={() => navigation.navigate("Home")}
@@ -73,6 +77,10 @@ const AddDocument = ({ route, navigation }) => {
       >        
         <Text>Cancelar</Text>
       </TouchableOpacity>
+    </View>
+  ) : (
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#0000ff" />
     </View>
   );
 };
@@ -132,4 +140,5 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
 export default AddDocument;

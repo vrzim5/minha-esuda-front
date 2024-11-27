@@ -1,19 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
-  FlatList,
   StyleSheet,
   TouchableOpacity,
+  FlatList,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import Card from "../components/Card";
+import { logoutUser } from "../services/api";
 
 const Home = ({ navigation }) => {
   const [documents, setDocuments] = useState([]);
 
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      const documents = await AsyncStorage.getItem("documents");
+      if (documents) {
+        setDocuments(JSON.parse(documents));
+      }
+    };
+    fetchDocuments();
+  }, []);
+
   const handleLogout = async () => {
-    await AsyncStorage.removeItem("token");
+    await logoutUser();
     navigation.replace("Login");
   };
 
@@ -30,6 +43,11 @@ const Home = ({ navigation }) => {
         >
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
+
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+        <FontAwesome name="sign-out" size={24} color="white" />
+      </TouchableOpacity>
+
       </View>
       <Text style={styles.title} accessible={true} accessibilityRole="header" accessibilityLabel="Seus Documentos">Seus Documentos</Text>
       {documents.length === 0 ? (
@@ -58,11 +76,10 @@ const Home = ({ navigation }) => {
               accessibilityLabel={`Documento ${item.name}`}
               accessibilityHint="Toque uma vez para ver os detalhes do documento"
             >
-              {/* DocumentCard component */}
-              <Text>{item.name}</Text>
+              <Card {...item} />
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item._id}
         />
       )}
       <TouchableOpacity
@@ -121,6 +138,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 30,
+  },
+  logoutButton: {
+    position: "absolute",
+    top: 55,
+    right: 20,
+    padding: 10,
+    backgroundColor: "transparent",
+    borderRadius: 5,
   },
 });
 

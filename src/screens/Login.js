@@ -23,11 +23,11 @@ const isValidEmail = (email) => {
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
-    if (!email || !senha) {
+    if (!email || !password) {
       Alert.alert("Erro", "Por favor, preencha o e-mail e a senha.");
       return;
     }
@@ -40,10 +40,10 @@ const Login = ({ navigation }) => {
     setLoading(true);
 
     try {
-      const response = await loginUser(email, senha);
+      const response = await loginUser(email, password);
 
       if (response.success) {
-        // Armazenar o token JWT no AsyncStorage
+
         await AsyncStorage.setItem("token", response.data.token);
         navigation.replace("Home");
       } else {
@@ -85,8 +85,8 @@ const Login = ({ navigation }) => {
         <TextInput
           style={styles.input}
           placeholder="Senha"
-          value={senha}
-          onChangeText={setSenha}
+          value={password}
+          onChangeText={setPassword}
           secureTextEntry
           accessible={true}
           accessibilityLabel="Senha"
@@ -127,26 +127,26 @@ const Login = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: { // Background
+  container: { 
     flex: 1,
-    backgroundColor: "#DB914A", // Cor de fundo
-    justifyContent: "flex-start", // Começar o conteúdo do topo
+    backgroundColor: "#DB914A", 
+    justifyContent: "flex-start", 
   },
-  logoContainer: { // Container para o Logo Esuda - Serve para deixar a logo no meio sem interferir em outros elementos
-    flex: 1,  // Faz com que a logo ocupe o espaço disponível
-    justifyContent: "center",  // Alinha verticalmente ao centro
-    alignItems: "center",  // Alinha horizontalmente ao centro
+  logoContainer: { 
+    flex: 1, 
+    justifyContent: "center",  
+    alignItems: "center", 
     position: 'relative',
   },
   overlayImage: {
     marginTop: "10%",
-    width: 200, // Ajuste o tamanho da imagem conforme necessário
+    width: 200, 
     height: 200,
-    resizeMode: 'contain', // A imagem vai se ajustar dentro do espaço disponível sem distorcer
+    resizeMode: 'contain', 
   },
   formContainer: {
-    flex: 2, // Permite que o formulário ocupe o restante do espaço
-    marginTop: -50,  // Ajusta a posição do formulário para um alinhamento mais adequado
+    flex: 2, 
+    marginTop: -50,  
     width: "100%",
     top: 99,
     backgroundColor: "#fff",
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 5, // Sombra para Android
+    elevation: 5,
   },
   title: {
     fontSize: 50,
@@ -192,18 +192,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
-  // Container para a mensagem "Não tem uma conta? Cadastre-se"
   signupContainer: {
-    flexDirection: 'row',  // Organiza os textos lado a lado
-    justifyContent: 'center', // Centraliza horizontalmente os textos
+    flexDirection: 'row',  
+    justifyContent: 'center', 
     marginTop: 16,
   },
   linkText: {
-    color: "#DB914A", // Cor do texto "Cadastre-se"
+    color: "#DB914A", 
     fontWeight: "bold",
   },
   Text: {
-    color: "#000", // Cor do texto "Não tem uma conta?"
+    color: "#000", 
     fontWeight: "bold",
   },
 });
