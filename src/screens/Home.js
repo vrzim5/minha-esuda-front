@@ -45,7 +45,7 @@ const Home = ({ navigation }) => {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <FontAwesome name="sign-out" size={24} color="black" />
+        <FontAwesome name="sign-out" size={24} color="white" />
       </TouchableOpacity>
 
       </View>

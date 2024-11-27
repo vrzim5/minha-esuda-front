@@ -9,7 +9,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DocumentCard from "../components/DocumentCard";
 import { FontAwesome } from "@expo/vector-icons";
-import DeletePopup from "../components/DeletePopup";
+import DeletePopups from "../components/DeletePopups";
 
 const DocumentDetails = ({ route, navigation }) => {
   const { item } = route.params;
@@ -40,7 +40,7 @@ const DocumentDetails = ({ route, navigation }) => {
       >
         <FontAwesome name="trash" size={24} color="black" />
       </TouchableOpacity>
-      <DeletePopup
+      <DeletePopups
         visible={modalVisible}
         onDelete={handleDelete}
         onCancel={() => setModalVisible(false)}
