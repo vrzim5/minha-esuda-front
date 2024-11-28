@@ -12,7 +12,6 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
 
-// Função para validar e-mail 
 const isValidEmail = (email) => {
   const regex = /\S+@\S+\.\S+/; 
   if (!regex.test(email)) {
@@ -38,13 +37,12 @@ const Login = ({ navigation }) => {
     }
 
     setLoading(true);
-
     try {
-      const response = await loginUser(email, password);
-
+      const normalizedEmail = email.toLowerCase();
+      const response = await loginUser(normalizedEmail, password);
       if (response.success) {
-
         await AsyncStorage.setItem("token", response.data.token);
+        console.log("Token armazenado:", response.data.token);
         navigation.replace("Home");
       } else {
         Alert.alert("Falha no Login", response.message);
@@ -59,7 +57,6 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Imagem*/}
       <View style={styles.logoContainer} accessible={true} accessibilityRole="image">
         <Image
           source={require('../assets/LogoEsuda.png')} 
@@ -69,10 +66,10 @@ const Login = ({ navigation }) => {
         />
       </View>
 
-      {/* Formulário de login */}
       <View style={styles.formContainer}>
-        <Text style={styles.title} accessible={true} accessibilityRole="header">Logar</Text>
-
+        <Text style={styles.title} accessible={true} accessibilityRole="header">
+          Logar
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Ex: 00000000@esuda.edu.br"
@@ -92,8 +89,6 @@ const Login = ({ navigation }) => {
           accessibilityLabel="Senha"
           accessibilityHint="Digite sua senha"
         />
-
-        {/* Botão */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleLogin}
@@ -108,9 +103,10 @@ const Login = ({ navigation }) => {
 
         {loading && <ActivityIndicator size="large" color="#1e90ff" />}
 
-        {/* Link para redirecionar para a tela de cadastro */}
         <View style={styles.signupContainer}>
-          <Text style={styles.Text} accessible={true} accessibilityLabel="Não tem uma conta?">Não tem uma conta? </Text>
+          <Text style={styles.Text} accessible={true} accessibilityLabel="Não tem uma conta?">
+            Não tem uma conta? 
+          </Text>
           <TouchableOpacity
           onPress={() => navigation.navigate("Signup")}
           accessible={true}
@@ -118,7 +114,7 @@ const Login = ({ navigation }) => {
           accessibilityLabel="Cadastrar-se"
           accessibilityHint="Toque uma vez para ir para a tela de cadastro"
         >
-          <Text style={styles.linkText}>Cadastrar-se</Text>
+          <Text style={styles.linkText}> Cadastrar-se</Text>
         </TouchableOpacity>
         </View>
       </View>

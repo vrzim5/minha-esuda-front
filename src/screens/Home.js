@@ -33,28 +33,31 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity 
-          style={styles.backButton} 
-          onPress={handleLogout}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Voltar"
-          accessibilityHint="Toque uma vez para voltar para a tela de login"
-        >
-          <Ionicons name="arrow-back" size={24} color="#fff" />
-        </TouchableOpacity>
-
         <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <FontAwesome name="sign-out" size={24} color="white" />
+        <FontAwesome 
+        name="sign-out" 
+        size={24} 
+        color="white" 
+        style={styles.icon}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityHint="Toque uma vez para sair da sua conta"
+        />
       </TouchableOpacity>
 
       </View>
-      <Text style={styles.title} accessible={true} accessibilityRole="header" accessibilityLabel="Seus Documentos">Seus Documentos</Text>
+      <Text style={styles.title} 
+      accessible={true} 
+      accessibilityRole="header" 
+      accessibilityLabel="Seus Documentos">
+        Seus Documentos
+      </Text>
+
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
           <Ionicons
             name="document-text-outline"
-            size={100}
+            size={120}
             color="#DB914A"
             style={styles.placeholderIcon}
           />
@@ -108,18 +111,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 16,
   },
-  backButton: {
+  logoutButton: {
     position: "absolute",
-    left: 16,
-    top: "60%",
-    transform: [{ translateY: -12 }], 
+    top: 50,
+    left: 20,
+    padding: 10,
+    backgroundColor: "transparent",
+    borderRadius: 5,
+  },
+  icon: {
+    transform: [{ rotate: "180deg" }], 
   },
   title: {
-    fontSize: 24,
+    fontSize: 27,
     fontWeight: "bold",
     textAlign: "center",
     color: "#000",
-    marginVertical: 24,
+    marginVertical: 30,
   },
   placeholder: {
     flex: 1,
@@ -138,14 +146,6 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     right: 30,
-  },
-  logoutButton: {
-    position: "absolute",
-    top: 55,
-    right: 20,
-    padding: 10,
-    backgroundColor: "transparent",
-    borderRadius: 5,
   },
 });
 

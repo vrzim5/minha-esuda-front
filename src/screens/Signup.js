@@ -11,7 +11,6 @@ import {
 } from "react-native";
 import { registerUser } from "../services/api";
 
-// Função para validar e-mail institucional @esuda.edu.br
 const isValidEmail = (email) => {
   return email.endsWith("@esuda.edu.br");
 };
@@ -29,30 +28,25 @@ const Signup = ({ navigation }) => {
       return;
     }
 
-    // Verifica se o e-mail é um e-mail institucional Esuda
     if (!isValidEmail(email)) {
       Alert.alert("Erro", "Esse e-mail não é um e-mail institucional Esuda.");
       return;
     }
 
-    // Verifica se a senha tem pelo menos 8 caracteres
     if (password.length < 8) {
       Alert.alert("Erro", "A senha deve conter pelo menos 8 caracteres.");
       return;
     }
 
-    // Verifica se as senhas coincidem
     if (password !== confirmPassword) {
       Alert.alert("Erro", "As senhas não coincidem.");
       return;
     }
 
     setLoading(true);
-
     try {
-      // Chama o serviço de cadastro com o e-mail e senha
-      const response = await registerUser(email, password, name);
-
+      const normalizedEmail = email.toLowerCase();
+      const response = await registerUser(normalizedEmail, password, name);
       if (response.success) {
         Alert.alert("Cadastro realizado com sucesso", "Agora você pode fazer login.");
         navigation.navigate("Login");
@@ -69,17 +63,16 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      {/* Imagem */}
       <View style={styles.logoContainer}>
         <Image
           source={require('../assets/LogoEsuda.png')}
           style={styles.overlayImage}
         />
       </View>
-
-      {/* Formulário de cadastro */}
       <View style={styles.formContainer}>
-        <Text style={styles.title} accessible={true} accessibilityRole="header">Cadastrar</Text>
+        <Text style={styles.title} accessible={true} accessibilityRole="header">
+          Cadastrar
+        </Text>
         <TextInput
           style={styles.input}
           placeholder="Nome"
@@ -118,8 +111,6 @@ const Signup = ({ navigation }) => {
           accessibilityLabel="Confirmar Senha"
           accessibilityHint="Digite sua senha novamente"
         />
-
-        {/* Botão de cadastro */}
         <TouchableOpacity
           style={styles.button}
           onPress={handleSignup}
@@ -134,9 +125,10 @@ const Signup = ({ navigation }) => {
 
         {loading && <ActivityIndicator size="large" color="#1e90ff" />}
 
-        {/* Link para redirecionar para a tela de login */}
         <View style={styles.loginLinkContainer}>
-          <Text style={styles.Text} accessible={true} accessibilityLabel="Já tem uma conta?">Já tem uma conta? </Text>
+          <Text style={styles.Text} accessible={true} accessibilityLabel="Já tem uma conta?">
+            Já tem uma conta? 
+          </Text>
           <TouchableOpacity
           onPress={() => navigation.navigate("Login")}
           accessible={true}
@@ -144,7 +136,7 @@ const Signup = ({ navigation }) => {
           accessibilityLabel="Logar-se"
           accessibilityHint="Toque uma vez para ir para a tela de login"
         >
-          <Text style={styles.linkText}>Logar-se</Text>
+          <Text style={styles.linkText}> Logar-se</Text>
         </TouchableOpacity>
         </View>
       </View>
