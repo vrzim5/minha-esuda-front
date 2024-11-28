@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Modal,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DocumentCard from "../components/DocumentCard";
-import { FontAwesome } from "@expo/vector-icons";
+import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import DeletePopups from "../components/DeletePopups";
 
 const DocumentDetails = ({ route, navigation }) => {
@@ -32,13 +26,45 @@ const DocumentDetails = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Detalhes</Text>
-      {item && <DocumentCard {...item} />}
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.replace("Home")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Voltar"
+          accessibilityHint="Toque uma vez para voltar para a tela inicial"
+        >
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+      </View>
+
+      <Text
+        style={styles.title}
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel="Detalhes do documento"
+      >
+        Detalhes do documento
+      </Text>
+
+      {item && (
+        <DocumentCard 
+          {...item} 
+          accessible={true}
+          accessibilityLabel="Informações do documento"
+          accessibilityHint="Mostra as informações detalhadas do documento"
+        />
+        )}
       <TouchableOpacity
         style={styles.deleteButton}
         onPress={() => setModalVisible(true)}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel="Deletar documento"
+        accessibilityHint="Toque uma vez para deletar o documento"
       >
-        <FontAwesome name="trash" size={24} color="black" />
+        <FontAwesome name="trash" size={24} color="white" />
       </TouchableOpacity>
       <DeletePopups
         visible={modalVisible}
@@ -49,18 +75,30 @@ const DocumentDetails = ({ route, navigation }) => {
   );
 };
 
-// Add styles here
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     backgroundColor: "#fff",
   },
+  header: {
+    width: "100%",
+    height: 100,
+    backgroundColor: "#DB914A",
+    justifyContent: "center",
+    paddingHorizontal: 16,
+  },
+  backButton: {
+    position: "absolute",
+    left: 16,
+    top: "60%",
+    transform: [{ translateY: -12 }],
+  },
   title: {
-    fontSize: 24,
+    fontSize: 27,
     fontWeight: "bold",
-    marginTop: 40,
-    marginBottom: 20,
+    textAlign: "center",
+    color: "#000",
+    marginVertical: 30,
   },
   deleteButton: {
     position: "absolute",

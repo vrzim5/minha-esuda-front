@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import QRCode from "react-native-qrcode-svg";
+
 const DocumentCard = ({
   name,
   cpf,
@@ -18,29 +19,53 @@ const DocumentCard = ({
     const year = d.getFullYear();
     return `${day}/${month}/${year}`;
   };
+
   return (
     <View style={styles.card}>
-      <Text style={styles.text}>Nome: {name}</Text>
-      <Text style={styles.text}>CPF: {cpf}</Text>
       <Text style={styles.text}>
-        Data de Nascimento: {formatDate(birthDate)}
+        <Text style={styles.boldText}>Nome: </Text>
+        {name}
       </Text>
-      <Text style={styles.text}>Instituição: {institution}</Text>
-      <Text style={styles.text}>Curso: {course}</Text>
-      <Text style={styles.text}>Emissor: {issuer}</Text>
-      <Text style={styles.text}>ID: {_id}</Text>
-      <Text style={styles.text}>Válido até {formatDate(validity)}</Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>CPF: </Text>
+        {cpf}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>Data de Nascimento: </Text>
+        {formatDate(birthDate)}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>Instituição: </Text>
+        {institution}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>Curso: </Text>
+        {course}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>Emissor: </Text>
+        {issuer}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>ID: </Text>
+        {_id}
+      </Text>
+      <Text style={styles.text}>
+        <Text style={styles.boldText}>Válido até: </Text>
+        {formatDate(validity)}
+      </Text>
       <View style={styles.qrCodeContainer}>
-        <QRCode value={_id} size={100} />
+        <QRCode value={_id} size={120} />
       </View>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   card: {
     padding: 20,
-    margin: 10,
-    backgroundColor: "#fff",
+    margin: 25,
+    backgroundColor: "#60B275",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -50,11 +75,15 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginBottom: 5,
+    marginBottom: 8,
+  },
+  boldText: {
+    fontWeight: "bold",
   },
   qrCodeContainer: {
     alignItems: "center",
     marginTop: 10,
   },
 });
+
 export default DocumentCard;

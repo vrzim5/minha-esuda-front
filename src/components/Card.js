@@ -11,7 +11,7 @@ const Card = ({ name, _id, validity }) => {
 };
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: "#60b275",
     borderRadius: 8,
     padding: 16,
     margin: 16,
