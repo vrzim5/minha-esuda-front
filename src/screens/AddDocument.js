@@ -18,15 +18,16 @@ const AddDocument = ({ route, navigation }) => {
 
   const parseDocumentData = async (data) => {
     const documentData = await getDocumentData(data);
+    console.log(`${JSON.stringify(documentData)}`);
     return {
-      _id: documentData[0]._id || "Unknown _id",
-      name: documentData[0].name || "Unknown name",
-      cpf: documentData[0].cpf || "Unknown cpf",
-      birthDate: documentData[0].birthDate || "Unknown date",
-      institution: documentData[0].institution || "Unknown institution",
-      course: documentData[0].course || "Unknown course",
-      issuer: documentData[0].issuer || "Unknown issuer",
-      validity: documentData[0].validity || "Unknown date",
+      _id: documentData.data._id || "Unknown _id",
+      name: documentData.data.name || "Unknown name",
+      cpf: documentData.data.cpf || "Unknown cpf",
+      birthDate: documentData.data.birthDate || "Unknown date",
+      institution: documentData.data.institution || "Unknown institution",
+      course: documentData.data.course || "Unknown date",
+      issuer: documentData.data.issuer || "Unknown issuer",
+      validity: documentData.data.validity || "Unknown date",
     };
   };
 
