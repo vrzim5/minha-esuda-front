@@ -8,6 +8,7 @@ const api = axios.create({
 
 export const loginUser = async (email, password) => {
   try {
+    console.log("logando usuário...");
     const response = await api.post("/api/auth/login", { email, password });
     await AsyncStorage.setItem("jwtToken", response.data.token);
     return { success: true, data: response.data };
