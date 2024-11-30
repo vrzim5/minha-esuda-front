@@ -1,6 +1,10 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import QRCode from "react-native-qrcode-svg";
+
+import dneImg from "../assets/dne.png";
+import yearImg from "../assets/2025.png";
+import uneImg from "../assets/une.png";
 
 const DocumentCard = ({
   name,
@@ -22,40 +26,45 @@ const DocumentCard = ({
 
   return (
     <View style={styles.card}>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>Nome: </Text>
-        {name}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>CPF: </Text>
-        {cpf}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>Data de Nascimento: </Text>
-        {formatDate(birthDate)}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>Instituição: </Text>
-        {institution}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>Curso: </Text>
-        {course}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>Emissor: </Text>
-        {issuer}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>ID: </Text>
-        {_id}
-      </Text>
-      <Text style={styles.text}>
-        <Text style={styles.boldText}>Válido até: </Text>
-        {formatDate(validity)}
-      </Text>
+      <Image source={dneImg} style={styles.dneImage} resizeMode="contain" />
+      <Image source={uneImg} style={styles.uneImage} resizeMode="contain" />
+      <View style={styles.infoContainer}>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>Nome: </Text>
+          {name}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>CPF: </Text>
+          {cpf}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>Data de Nascimento: </Text>
+          {formatDate(birthDate)}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>Instituição: </Text>
+          {institution}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>Curso: </Text>
+          {course}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>Emissor: </Text>
+          {issuer}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>ID: </Text>
+          {_id}
+        </Text>
+        <Text style={styles.text}>
+          <Text style={styles.boldText}>Válido até: </Text>
+          {formatDate(validity)}
+        </Text>
+      </View>
+      <Image source={yearImg} style={styles.yearImage} />
       <View style={styles.qrCodeContainer}>
-        <QRCode value={_id} size={120} />
+        <QRCode value={_id} size={100} />
       </View>
     </View>
   );
@@ -72,6 +81,34 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 1,
+    position: "relative",
+    height: 500,
+  },
+  dneImage: {
+    width: 130,
+    height: 50,
+    position: "absolute",
+    top: 15,
+    left: 20,
+  },
+  uneImage: {
+    width: 125,
+    height: 45,
+    position: "absolute",
+    top: 15,
+    right: 5,
+  },
+  yearImage: {
+    width: 100,
+    height: 50,
+    position: "absolute",
+    bottom: 15,
+    right: 15,
+  },
+  infoContainer: {
+    position: "absolute",
+    bottom: 50,
+    left: 20,
   },
   text: {
     fontSize: 16,
@@ -81,8 +118,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   qrCodeContainer: {
-    alignItems: "center",
-    marginTop: 10,
+    position: "absolute",
+    top: 80,
+    right: 20,
   },
 });
 
