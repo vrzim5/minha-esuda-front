@@ -62,7 +62,7 @@ const DocumentCard = ({
           {formatDate(validity)}
         </Text>
       </View>
-      <Image source={yearImg} style={styles.yearImage} />
+      <Image source={yearImg} style={styles.yearImage} resizeMode="contain"/>
       <View style={styles.qrCodeContainer}>
         <QRCode value={_id} size={100} />
       </View>

@@ -26,7 +26,7 @@ const GetStarted = ({ navigation }) => {
       {/* Botão Começar */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => navigation.navigate("Signup")}
+        onPress={() => navigation.navigate("Login")}
         accessible={true}
         accessibilityRole="button"
         accessibilityLabel="Começar"
