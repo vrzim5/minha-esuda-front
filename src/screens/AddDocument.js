@@ -54,9 +54,16 @@ const AddDocument = ({ route, navigation }) => {
         Verifique se as informações do seu documento estão corretas
       </Text>
 
-      {/* Card com as informações do documento */}
-      {documentInfo && <DocumentCard {...documentInfo} />}
-
+      {documentInfo && (
+        <View style={styles.cardContainer}>
+          <DocumentCard
+            {...documentInfo}
+            accessible={true}
+            accessibilityLabel="Informações do documento"
+            accessibilityHint="Mostra as informações detalhadas do documento"
+          />
+        </View>
+      )}
       <TouchableOpacity 
       style={styles.addButton} 
       onPress={handleAdd}
@@ -99,6 +106,11 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 20,
+  },
+  cardContainer: {
+    width: "100%",
+    paddingHorizontal: 10,
+    marginBottom: 10,
   },
   text: {
     fontSize: 16,
