@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import { CameraView, Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,6 +15,9 @@ const { width } = Dimensions.get("window");
 const CAMERA_SIZE = width * 0.7;
 
 const Scan = ({ navigation }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
 
@@ -37,9 +41,11 @@ const Scan = ({ navigation }) => {
     return <Text>Sem acesso à câmera.</Text>;
   }
 
+  const cameraSize = isLandscape ? width * 0.25 : CAMERA_SIZE;
+
   return (
-    <View style={styles.container}>
-      <View style={styles.header}>
+    <View style={styles.container}> 
+      <View style={[styles.header, isLandscape && styles.headerLandscape]}>
         <TouchableOpacity 
         style={styles.backButton} 
         onPress={() => navigation.replace("Home")}
@@ -52,22 +58,30 @@ const Scan = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <Text style={styles.title} accessible={true} accessibilityRole="header">Escaneie o seu documento</Text>
+      <Text style={[styles.title, isLandscape && styles.titleLandscape]}
+      accessible={true} 
+      accessibilityRole="header"
+      accessibilityLabel="Escaneie o seu documento"
+      >
+        Escaneie o seu documento
+      </Text>
+
       <Text 
-        style={styles.description}
+        style={[styles.description, isLandscape && styles.descriptionLandscape]}
         accessible={true}
         accessibilityLabel="Escaneie o QR code presente no seu documento físico"
       >
         Escaneie o QR code presente no seu documento
       </Text>
-      <View style={styles.scannerContainer}>
-        <View style={styles.cameraContainer}>
+
+      <View style={[styles.scannerContainer, isLandscape && styles.scannerContainerLandscape]}>
+        <View style={[styles.cameraContainer, { width: cameraSize, height: cameraSize }]}>
           <CameraView
             onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
             barcodeScannerSettings={{
               barcodeTypes: ["qr", "pdf417"],
             }}
-            style={styles.camera}
+            style={[styles.camera, isLandscape && styles.cameraLandscape]}
             ratio="1:1"
             accessible={true}
             accessibilityLabel="Visualização da câmera para escanear QR code"
@@ -79,6 +93,7 @@ const Scan = ({ navigation }) => {
             onPress={() => setScanned(false)}
           />
         )}
+
         <TouchableOpacity
           style={styles.cancelButton}
           onPress={() => navigation.goBack()}
@@ -106,6 +121,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 16,
   },
+  headerLandscape: {
+    height: 60,
+  },
   backButton: {
     position: "absolute",
     left: 16,
@@ -119,11 +137,20 @@ const styles = StyleSheet.create({
     color: "#000",
     marginVertical: 24,
   },
+  titleLandscape: {
+    marginTop: 10,
+    marginBottom: 10,
+    fontSize: 20,
+  },
   description: {
     fontSize: 16,
     textAlign: "center",
     color: "#DB914A",
-    marginBottom: 24,
+    marginBottom: 10,
+  },
+  descriptionLandscape: {
+    marginBottom: 5,
+    fontSize: 14,
   },
   scanner: {
     width: "100%",

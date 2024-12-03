@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  Image
+  Image, 
+  useWindowDimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
@@ -21,6 +22,9 @@ const isValidEmail = (email) => {
 };
 
 const Login = ({ navigation }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,21 +61,27 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.logoContainer} accessible={true} accessibilityRole="image">
-        <Image
-          source={require('../assets/LogoEsuda.png')} 
-          style={styles.overlayImage}
-          accessible={true}
-          accessibilityLabel="Logo da Esuda"
-        />
-      </View>
+      {!isLandscape && (
+        <View style={styles.logoContainer} accessible={true} accessibilityRole="image">
+          <Image
+            source={require('../assets/LogoEsuda.png')} 
+            style={styles.overlayImage}
+            accessible={true}
+            accessibilityLabel="Logo da Esuda"
+          />
+        </View>
+      )}
 
       <View style={styles.formContainer}>
-        <Text style={styles.title} accessible={true} accessibilityRole="header">
+        <Text style={[styles.title, isLandscape && styles.titleLandscape]} 
+        accessible={true} 
+        accessibilityRole="header"
+        accessibilityLabel="Logar"
+        >
           Logar
         </Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, isLandscape && styles.inputLandscape]}
           placeholder="Ex: 00000000@esuda.edu.br"
           value={email}
           onChangeText={setEmail}
@@ -80,7 +90,7 @@ const Login = ({ navigation }) => {
           accessibilityHint="Digite seu e-mail institucional"
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, isLandscape && styles.inputLandscape]}
           placeholder="Senha"
           value={password}
           onChangeText={setPassword}
@@ -90,7 +100,7 @@ const Login = ({ navigation }) => {
           accessibilityHint="Digite sua senha"
         />
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, isLandscape && styles.buttonLandscape]}
           onPress={handleLogin}
           disabled={loading}
           accessible={true}
@@ -104,7 +114,9 @@ const Login = ({ navigation }) => {
         {loading && <ActivityIndicator size="large" color="#1e90ff" />}
 
         <View style={styles.signupContainer}>
-          <Text style={styles.Text} accessible={true} accessibilityLabel="Não tem uma conta?">
+          <Text style={styles.Text} 
+          accessible={true} 
+          accessibilityLabel="Não tem uma conta?">
             Não tem uma conta? 
           </Text>
           <TouchableOpacity
@@ -156,12 +168,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5,
+    alignItems: "center",
   },
   title: {
     fontSize: 50,
     fontWeight: "bold",
     marginBottom: 24,
     textAlign: 'center',
+  },
+  titleLandscape: {
+    fontSize: 40,
+    marginTop: -20,
+    marginBottom: 20,
   },
   input: {
     width: "100%",
@@ -173,6 +191,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     color: "#808080",
   },
+  inputLandscape: {
+    width: "70%",
+  },
   button: {
     backgroundColor: "#61B375",
     paddingVertical: 10,
@@ -182,6 +203,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
     alignItems: "center",
     justifyContent: "center",
+  },
+  buttonLandscape: {
+    marginTop: 15,
+    marginHorizontal: 300,
   },
   buttonText: {
     color: "#fff",

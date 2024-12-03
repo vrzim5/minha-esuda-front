@@ -7,7 +7,8 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  Image
+  Image,
+  useWindowDimensions,
 } from "react-native";
 import { registerUser } from "../services/api";
 
@@ -16,6 +17,9 @@ const isValidEmail = (email) => {
 };
 
 const Signup = ({ navigation }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -63,18 +67,24 @@ const Signup = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
+      {!isLandscape && (
       <View style={styles.logoContainer}>
         <Image
           source={require('../assets/LogoEsuda.png')}
           style={styles.overlayImage}
         />
       </View>
+     )}
+
       <View style={styles.formContainer}>
-        <Text style={styles.title} accessible={true} accessibilityRole="header">
+        <Text style={[styles.title, isLandscape && styles.titleLandscape]} 
+        accessible={true} 
+        accessibilityRole="header"
+        >
           Cadastrar
         </Text>
         <TextInput
-          style={styles.input}
+          style={[styles.input, isLandscape && styles.inputLandscape]}
           placeholder="Nome"
           value={name}
           onChangeText={setName}
@@ -83,7 +93,7 @@ const Signup = ({ navigation }) => {
           accessibilityHint="Digite seu nome completo"
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, isLandscape && styles.inputLandscape]}
           placeholder="Ex: 00000000@esuda.edu.br"
           value={email}
           onChangeText={setEmail}
@@ -92,7 +102,7 @@ const Signup = ({ navigation }) => {
           accessibilityHint="Digite seu e-mail institucional"
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, isLandscape && styles.inputLandscape]}
           placeholder="Senha"
           value={password}
           onChangeText={setPassword}
@@ -102,7 +112,7 @@ const Signup = ({ navigation }) => {
           accessibilityHint="Digite sua senha"
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, isLandscape && styles.inputLandscape]}
           placeholder="Confirmar Senha"
           value={confirmPassword}
           onChangeText={setConfirmPassword}
@@ -112,7 +122,7 @@ const Signup = ({ navigation }) => {
           accessibilityHint="Digite sua senha novamente"
         />
         <TouchableOpacity
-          style={styles.button}
+          style={[styles.button, isLandscape && styles.buttonLandscape]}
           onPress={handleSignup}
           disabled={loading}
           accessible={true}
@@ -125,7 +135,7 @@ const Signup = ({ navigation }) => {
 
         {loading && <ActivityIndicator size="large" color="#1e90ff" />}
 
-        <View style={styles.loginLinkContainer}>
+        <View style={[styles.loginLinkContainer, isLandscape && styles.loginLinkContainerLandscape]}>
           <Text style={styles.Text} accessible={true} accessibilityLabel="Já tem uma conta?">
             Já tem uma conta? 
           </Text>
@@ -178,12 +188,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     elevation: 5, 
+    alignItems: "center",
   },
   title: {
     fontSize: 50,
     fontWeight: "bold",
     marginBottom: 24,
     textAlign: 'center',
+  },
+  titleLandscape: {
+    fontSize: 30,
+    marginTop: -25,
   },
   input: {
     width: "100%",
@@ -195,6 +210,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     color: "#808080",
   },
+  inputLandscape: {
+    width: "70%",
+    padding: 9,
+    marginBottom: 12,
+    
+  },
   button: {
     backgroundColor: "#61B375",
     paddingVertical: 10,
@@ -205,6 +226,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  buttonLandscape: {
+    marginTop: 2,
+    marginHorizontal: 300,
+  },
   buttonText: {
     color: "#fff",
     fontSize: 16,
@@ -214,6 +239,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row', 
     justifyContent: 'center', 
     marginTop: 16,
+  },
+  loginLinkContainerLandscape: {
+    marginTop: 8,
   },
   linkText: {
     color: "#DB914A", 

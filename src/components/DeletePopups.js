@@ -1,25 +1,48 @@
 import React from "react";
-import { View, Text, Button, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+  useWindowDimensions,
+} from "react-native";
 
-const DeletePopup = ({ visible, onDelete, onCancel }) => {
+const DeletePopups = ({ visible, onDelete, onCancel }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   return (
-    <Modal
-      statusBarTranslucent={true}
-      transparent={true}
-      animationType="fade"
-      visible={visible}
-      onRequestClose={onCancel}
+    <Modal 
+    transparent={true} 
+    visible={visible} 
+    animationType="slide"
     >
-      <View style={styles.container}>
-        <View style={styles.popup}>
-          <Text style={styles.title}>Remover Documento</Text>
-          <Text style={styles.message}>
-            Você tem certeza que quer remover este documento?
+      <View style={styles.modalContainer}>
+        <View style={[ styles.modalContent, isLandscape && styles.modalContentLandscape,]}>
+          <Text style={[styles.modalText, isLandscape && styles.modalTextLandscape]}>
+            Tem certeza que deseja deletar este documento?
           </Text>
-          <View style={styles.buttonContainer}>
-            <Button title="Cancelar" onPress={onCancel} />
-            <Button title="Remover" onPress={onDelete} color="red" />
-          </View>
+          <TouchableOpacity
+            style={[ styles.confirmDeleteButton, isLandscape && styles.confirmDeleteButtonLandscape,]}
+            onPress={onDelete}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Confirmar exclusão"
+            accessibilityHint="Toque uma vez para confirmar a exclusão do documento"
+          >
+            <Text style={styles.buttonText}>Deletar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[ styles.cancelDeleteButton, isLandscape && styles.cancelDeleteButtonLandscape,]}
+            onPress={onCancel}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Cancelar exclusão"
+            accessibilityHint="Toque uma vez para cancelar a exclusão do documento"
+          >
+            <Text style={styles.buttonText}>Cancelar</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </Modal>
@@ -27,34 +50,56 @@ const DeletePopup = ({ visible, onDelete, onCancel }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  modalContainer: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0,0,0,0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
   },
-  popup: {
+  modalContent: {
     width: 300,
     padding: 20,
-    backgroundColor: "white",
+    backgroundColor: "#fff",
     borderRadius: 10,
     alignItems: "center",
   },
-  title: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 10,
+  modalContentLandscape: {
+    width: 500,
   },
-  message: {
-    fontSize: 16,
+  modalText: {
+    fontSize: 18,
     marginBottom: 20,
     textAlign: "center",
   },
-  buttonContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+  modalTextLandscape: {
+    fontSize: 16,
+  },
+  confirmDeleteButton: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
     width: "100%",
+    alignItems: "center",
+  },
+  confirmDeleteButtonLandscape: {
+    padding: 8,
+  },
+  cancelDeleteButton: {
+    backgroundColor: "gray",
+    padding: 10,
+    borderRadius: 5,
+    marginTop: 10,
+    width: "100%",
+    alignItems: "center",
+  },
+  cancelDeleteButtonLandscape: {
+    padding: 8,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
   },
 });
 
-export default DeletePopup;
+export default DeletePopups;

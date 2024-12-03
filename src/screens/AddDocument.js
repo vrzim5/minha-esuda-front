@@ -1,10 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { ActivityIndicator, View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import { getDocumentData } from "../services/api";
 import DocumentCard from "../components/DocumentCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const AddDocument = ({ route, navigation }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   const { data } = route.params;
 
   const [documentInfo, setDocumentInfo] = useState(null);
@@ -45,9 +55,17 @@ const AddDocument = ({ route, navigation }) => {
 
   return documentInfo ? (
     <View style={styles.container}>
-      <Text style={styles.title} accessible={true} accessibilityRole="header" accessibilityLabel="Adicionar documento">Adicionar documento</Text>
       <Text
-        style={styles.text}
+        style={[styles.title, isLandscape && styles.titleLandscape]}
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel="Adicionar documento"
+      >
+        Adicionar documento
+      </Text>
+
+      <Text
+        style={[styles.subtitle, isLandscape && styles.subtitleLandscape]}
         accessible={true}
         accessibilityLabel="Verifique se as informações do seu documento estão corretas"
       >
@@ -64,27 +82,29 @@ const AddDocument = ({ route, navigation }) => {
           />
         </View>
       )}
-      <TouchableOpacity 
-      style={styles.addButton} 
-      onPress={handleAdd}
-      accessible={true}
-      accessibilityRole="button"
-      accessibilityLabel="Adicionar"
-      accessibilityHint="Toque uma vez para adicionar o documento"
-    >
-        <Text style={styles.addButtonText}>Adicionar</Text>
-      </TouchableOpacity>
+      <View style={[styles.buttonContainer, isLandscape && styles.buttonContainerLandscape,]}>
+        <TouchableOpacity
+          style={[styles.addButton, isLandscape && styles.buttonLandscape]}
+          onPress={handleAdd}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Adicionar"
+          accessibilityHint="Toque uma vez para adicionar o documento"
+        >
+          <Text style={styles.addButtonText}>Adicionar</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity
-        style={styles.cancelButton}
-        onPress={() => navigation.navigate("Home")}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityLabel="Cancelar"
-        accessibilityHint="Toque uma vez para cancelar"
-      >        
-        <Text>Cancelar</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.cancelButton, isLandscape && styles.buttonLandscape]}
+          onPress={() => navigation.navigate("Home")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Cancelar"
+          accessibilityHint="Toque uma vez para cancelar"
+        >
+          <Text>Cancelar</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   ) : (
     <View style={styles.container}>
@@ -92,7 +112,6 @@ const AddDocument = ({ route, navigation }) => {
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -107,15 +126,32 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 20,
   },
+  titleLandscape: {
+    fontSize: 20,
+    marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    marginBottom: 10,
+    textAlign: "center",
+  },
+  subtitleLandscape: {
+    marginBottom: 0,
+  },
   cardContainer: {
     width: "100%",
     paddingHorizontal: 10,
     marginBottom: 10,
   },
-  text: {
-    fontSize: 16,
-    marginBottom: 20,
-    textAlign: "center",
+  buttonContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  buttonContainerLandscape: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "40%",
   },
   card: {
     backgroundColor: "#fff",
@@ -151,6 +187,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#f44336",
     padding: 10,
     borderRadius: 5,
+    marginBottom: 10,
+  },
+  buttonLandscape: {
+    marginVertical: 0,
+    marginHorizontal: 10,
+    marginTop: -20,
   },
 });
 
