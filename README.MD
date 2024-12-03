@@ -78,7 +78,7 @@ Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICEN
 ## Autores
 
 - [@JulliaAP](https://github.com/JulliaAP)
-- [@JulliaAP](https://github.com/vrzim5)
-- [@JulliaAP](https://github.com/Lor3nn)
-- [@JulliaAP](https://github.com/gabrielatavares)
-- [@JulliaAP](https://github.com/emmenezes02)
+- [@vrzim5](https://github.com/vrzim5)
+- [@Lor3nn](https://github.com/Lor3nn)
+- [@gabrielatavares](https://github.com/gabrielatavares)
+- [@emmenezes02](https://github.com/emmenezes02)
