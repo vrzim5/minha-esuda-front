@@ -60,28 +60,20 @@ Desenvolver uma plataforma móvel que permita:
   npm start  
   ```
 
-## Contribuição
-
-1. Faça um fork do projeto.
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`).
-3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`).
-4. Faça o push para a branch (`git push origin feature/nova-feature`).
-5. Abra um Pull Request.
-
 ## 🤝 Contribuição
 
 Contribuições são sempre bem-vindas!
 
 1. Faça um fork do repositório.
-2. Crie uma branch para sua funcionalidade: git checkout -b feature/nova-funcionalidade.
-3. Envie um pull request com suas alterações.
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`).
+3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`).
+4. 4. Faça o push para a branch (`git push origin feature/nova-feature`).
+5. Abra um Pull Request com suas alterações.
 
 
 ## 📜 Licença
 
-Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
-
-[MIT](https://choosealicense.com/licenses/mit/)
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes. [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Autores
 
