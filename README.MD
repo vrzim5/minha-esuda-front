@@ -1,35 +1,64 @@
-# Minha Esuda Front
+# Aplicativo Mobile Minha Esuda para Carteirinha de Estudante Institucional
 
-Este é o repositório do frontend do projeto Minha Esuda.
+Este projeto visa criar um aplicativo móvel para disponibilizar a carteirinha de estudante institucional da Faculdade ESUDA diretamente no smartphone dos alunos. O aplicativo combina tecnologias de backend, desenvolvimento mobile e design UI/UX para oferecer uma solução completa, funcional e centrada no usuário. 
 
-## Descrição
+## 🎯 Objetivo  
 
-O projeto Minha Esuda é uma aplicação web para gerenciamento de estudos. Esta parte do projeto é responsável pela interface do usuário.
+Desenvolver uma plataforma móvel que permita:  
+- Acesso virtual à carteirinha de estudante.  
+- Integração com backend para gerenciamento de dados dos alunos.  
+- Experiência de usuário intuitiva, responsiva e acessível. 
 
-## Tecnologias Utilizadas
+## 🛠️ Tecnologias e Ferramentas  
 
-- React
-- JavaScript
-- HTML
-- CSS
+- **Backend**:  
+  - Node.js, Express  
+  - Banco de dados: MongoDB
+  - ORM: Mongoose  
+  - Autenticação: JWT  
 
-## Instalação
+- **Mobile**:  
+  - React Native, Expo  
+  - Leitura de QR Code: `expo-camera`  
 
-Para instalar as dependências do projeto, execute:
+## ⚙️ Funcionalidades  
+1. **Leitura de QR Code**  
+   - Vinculação da carteirinha física ao perfil do aluno.  
 
-```bash
-npm install
-```
+2. **Autenticação de Usuários**  
+   - Cadastro via e-mail institucional e senha.  
+   - Recuperação de senha por e-mail.  
+   - Segurança com JWT.  
 
-## Execução
+3. **Exibição de Carteirinha Virtual**  
+   - Exibição de dados da carteirinha
+   - Layout visualmente atraente e legível.  
 
-Para iniciar a aplicação, execute:
+4. **Backend Robust**  
+   - Armazenamento e gerenciamento seguro dos dados.  
+   - API REST para autenticação e consulta de informações.  
 
-```bash
-npm start
-```
+5. **Design Responsivo e Acessível**  
+   - Compatível com diferentes tamanhos de tela e dispositivos.
+   - Compatível com modo retrato e paisagem  
+   - Suporte a leitores de tela e navegação por teclado.  
 
-A aplicação estará disponível em `http://localhost:3000`.
+## 🚀 Como Instalar e Usar  
+
+1. Clone este repositório:  
+   ```bash  
+   git clone https://github.com/JulliaAP/minha-esuda-front.git
+   ```
+2. Instale as dependências:
+  ```bash  
+  npm install  
+  ```
+3. Configure o arquivo .env com as variáveis de ambiente necessárias.
+
+4. Inicie o aplicativo
+  ```bash  
+  npm start  
+  ```
 
 ## Contribuição
 
@@ -39,6 +68,25 @@ A aplicação estará disponível em `http://localhost:3000`.
 4. Faça o push para a branch (`git push origin feature/nova-feature`).
 5. Abra um Pull Request.
 
-## Licença
+## 🤝 Contribuição
 
-Este projeto está licenciado sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Contribuições são sempre bem-vindas!
+
+1. Faça um fork do repositório.
+2. Crie uma branch para sua funcionalidade: git checkout -b feature/nova-funcionalidade.
+3. Envie um pull request com suas alterações.
+
+
+## 📜 Licença
+
+Este projeto está licenciado sob a Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## Autores
+
+- [@JulliaAP](https://github.com/JulliaAP)
+- [@JulliaAP](https://github.com/vrzim5)
+- [@JulliaAP](https://github.com/Lor3nn)
+- [@JulliaAP](https://github.com/gabrielatavares)
+- [@JulliaAP](https://github.com/emmenezes02)
