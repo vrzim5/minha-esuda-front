@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  useWindowDimensions,
+} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DocumentCard from "../components/DocumentCard";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
@@ -7,6 +13,10 @@ import DeletePopups from "../components/DeletePopups";
 
 const DocumentDetails = ({ route, navigation }) => {
   const { item } = route.params;
+  
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleDelete = async () => {
@@ -26,7 +36,7 @@ const DocumentDetails = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
+      <View style={[styles.header, isLandscape && styles.headerLandscape]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.replace("Home")}
@@ -40,7 +50,7 @@ const DocumentDetails = ({ route, navigation }) => {
       </View>
 
       <Text
-        style={styles.title}
+        style={[styles.title, isLandscape && styles.titleLandscape]}
         accessible={true}
         accessibilityRole="header"
         accessibilityLabel="Detalhes do documento"
@@ -49,15 +59,23 @@ const DocumentDetails = ({ route, navigation }) => {
       </Text>
 
       {item && (
-        <DocumentCard 
-          {...item} 
-          accessible={true}
-          accessibilityLabel="Informações do documento"
-          accessibilityHint="Mostra as informações detalhadas do documento"
-        />
-        )}
+        <View
+          style={[
+            styles.cardContainer,
+            isLandscape && styles.cardContainerLandscape,
+          ]}
+        >
+          <DocumentCard
+            {...item}
+            accessible={true}
+            accessibilityLabel="Informações do documento"
+            accessibilityHint="Mostra as informações detalhadas do documento"
+          />
+        </View>
+      )}
+
       <TouchableOpacity
-        style={styles.deleteButton}
+        style={[ styles.deleteButton, isLandscape && styles.deleteButtonLandscape,]}
         onPress={() => setModalVisible(true)}
         accessible={true}
         accessibilityRole="button"
@@ -66,6 +84,7 @@ const DocumentDetails = ({ route, navigation }) => {
       >
         <FontAwesome name="trash" size={24} color="white" />
       </TouchableOpacity>
+
       <DeletePopups
         visible={modalVisible}
         onDelete={handleDelete}
@@ -87,6 +106,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 16,
   },
+  headerLandscape: {
+    height: 60,
+  },
   backButton: {
     position: "absolute",
     left: 16,
@@ -100,6 +122,23 @@ const styles = StyleSheet.create({
     color: "#000",
     marginVertical: 30,
   },
+  titleLandscape: {
+    fontSize: 20,
+    marginBottom: 0,
+    marginTop: 15,
+  },
+  cardContainer: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 10,
+    marginBottom: 20,
+  },
+  cardContainerLandscape: {
+    flex: 1,
+    width: "100%",
+    paddingHorizontal: 80,
+    marginBottom: 10,
+  },
   deleteButton: {
     position: "absolute",
     top: 20,
@@ -110,28 +149,10 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     borderRadius: 5,
   },
-  modalContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
-  },
-  modalContent: {
-    width: 300,
-    padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  confirmDeleteButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: "red",
-    borderRadius: 5,
-  },
-  confirmDeleteButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
+  deleteButtonLandscape: {
+    top: 10,
+    right: 50,
+    padding: 12,
   },
 });
 

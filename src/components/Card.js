@@ -1,14 +1,19 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-const Card = ({ name, _id, validity }) => {
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
+
+const Card = ({ name, _id, validity}) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+  
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, isLandscape && styles.cardLandscape]}>
       <Text style={styles.title}>{name}</Text>
       <Text style={styles.content}>{_id}</Text>
       <Text style={styles.content}>Válido até {validity}</Text>
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   card: {
     backgroundColor: "#60b275",
@@ -20,6 +25,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 3,
+  },
+  cardLandscape: {
+    alignSelf: "center",
+    width: "60%",
   },
   title: {
     fontSize: 18,

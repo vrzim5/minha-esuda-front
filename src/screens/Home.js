@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   FlatList,
+  useWindowDimensions,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
@@ -14,6 +15,9 @@ import { logoutUser } from "../services/api";
 import { useFocusEffect } from "@react-navigation/native";
 
 const Home = ({ navigation }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+  
   const [documents, setDocuments] = useState([]);
 
   useFocusEffect(
@@ -36,8 +40,11 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+      <View style={[styles.header, isLandscape && styles.headerLandscape]}>
+        <TouchableOpacity 
+        style={[styles.logoutButton, isLandscape && styles.logoutButtonLandscape]} 
+        onPress={handleLogout}
+        >
         <FontAwesome 
         name="sign-out" 
         size={24} 
@@ -50,7 +57,7 @@ const Home = ({ navigation }) => {
       </TouchableOpacity>
 
       </View>
-      <Text style={styles.title} 
+      <Text style={[styles.title, isLandscape && styles.titleLandscape]}
       accessible={true} 
       accessibilityRole="header" 
       accessibilityLabel="Seus Documentos">
@@ -83,7 +90,7 @@ const Home = ({ navigation }) => {
               accessibilityLabel={`Documento ${item.name}`}
               accessibilityHint="Toque uma vez para ver os detalhes do documento"
             >
-              <Card {...item} />
+              <Card {...item} isLandscape={isLandscape} />
             </TouchableOpacity>
           )}
           keyExtractor={(item) => item._id}
@@ -115,6 +122,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingHorizontal: 16,
   },
+  headerLandscape: {
+    height: 60,
+  },
   logoutButton: {
     position: "absolute",
     top: 50,
@@ -122,6 +132,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "transparent",
     borderRadius: 5,
+  },
+  logoutButtonLandscape: {
+    top: "50%",
+    transform: [{ translateY: -15 }],
   },
   icon: {
     transform: [{ rotate: "180deg" }], 
@@ -132,6 +146,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#000",
     marginVertical: 30,
+  },
+  titleLandscape: {
+    fontSize: 24,
+    marginTop: 15,
   },
   placeholder: {
     flex: 1,

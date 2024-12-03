@@ -1,5 +1,11 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  useWindowDimensions,
+} from "react-native";
 import QRCode from "react-native-qrcode-svg";
 
 import dneImg from "../assets/dne.png";
@@ -16,6 +22,9 @@ const DocumentCard = ({
   _id,
   validity,
 }) => {
+  const { width, height } = useWindowDimensions();
+  const isLandscape = width > height;
+
   const formatDate = (date) => {
     const d = new Date(date);
     const day = `0${d.getDate()}`.slice(-2);
@@ -25,10 +34,14 @@ const DocumentCard = ({
   };
 
   return (
-    <View style={styles.card}>
-      <Image source={dneImg} style={styles.dneImage} resizeMode="contain" />
+    <View style={[styles.card, isLandscape && styles.cardLandscape]}>
+      <Image source={dneImg} 
+      style={[styles.dneImage, isLandscape && styles.dneImageLandscape]} 
+      resizeMode="contain" 
+      />
       <Image source={uneImg} style={styles.uneImage} resizeMode="contain" />
-      <View style={styles.infoContainer}>
+      
+      <View style={[styles.infoContainer, isLandscape && styles.infoContainerLandscape]}>
         <Text style={styles.text}>
           <Text style={styles.boldText}>Nome: </Text>
           {name}
@@ -62,7 +75,7 @@ const DocumentCard = ({
           {formatDate(validity)}
         </Text>
       </View>
-      <Image source={yearImg} style={styles.yearImage} resizeMode="contain"/>
+      <Image source={yearImg} style={styles.yearImage} />
       <View style={styles.qrCodeContainer}>
         <QRCode value={_id} size={100} />
       </View>
@@ -84,12 +97,23 @@ const styles = StyleSheet.create({
     position: "relative",
     height: 500,
   },
+  cardLandscape: {
+    flexDirection: "row",
+    height: '250',
+    width: '90%',
+  },
   dneImage: {
     width: 130,
     height: 50,
     position: "absolute",
     top: 15,
     left: 20,
+  },
+  dneImageLandscape: {
+    position: "relative",
+    top: 0,
+    left: 0,
+    marginRight: 20,
   },
   uneImage: {
     width: 125,
@@ -109,6 +133,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 50,
     left: 20,
+  },
+  infoContainerLandscape: {
+    position: "relative",
+    bottom: 0,
+    left: 20,
+    alignItems: "flex-start", 
+    justifyContent: "center",
+    flex: 1,
   },
   text: {
     fontSize: 16,
