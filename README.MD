@@ -47,7 +47,7 @@ Desenvolver uma plataforma móvel que permita:
 
 1. Clone este repositório:  
    ```bash  
-   git clone https://github.com/JulliaAP/minha-esuda-front.git
+   git clone https://github.com/JulliaAP/minha-esuda-back.git
    ```
 2. Instale as dependências:
   ```bash  
