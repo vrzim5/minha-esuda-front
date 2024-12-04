@@ -3,14 +3,18 @@ import {
   View,
   Text,
   StyleSheet,
+  ImageBackground,
   Image,
   useWindowDimensions,
 } from "react-native";
+
 import QRCode from "react-native-qrcode-svg";
 
 import dneImg from "../assets/dne.png";
 import yearImg from "../assets/2025.png";
 import uneImg from "../assets/une.png";
+import { getProfilePicture } from "../services/api";
+import { formatDate } from "../utils/date";
 
 const DocumentCard = ({
   name,
@@ -21,27 +25,44 @@ const DocumentCard = ({
   issuer,
   _id,
   validity,
+  profilePicture,
 }) => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
 
-  const formatDate = (date) => {
-    const d = new Date(date);
-    const day = `0${d.getDate()}`.slice(-2);
-    const month = `0${d.getMonth() + 1}`.slice(-2);
-    const year = d.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
+  const backgroundImage = isLandscape
+    ? require("../assets/background1.png")
+    : require("../assets/background2.png");
 
   return (
-    <View style={[styles.card, isLandscape && styles.cardLandscape]}>
-      <Image source={dneImg} 
-      style={[styles.dneImage, isLandscape && styles.dneImageLandscape]} 
-      resizeMode="contain" 
-      />
+    <ImageBackground
+      source={backgroundImage}
+      style={[styles.card, isLandscape && styles.cardLandscape]}
+      imageStyle={styles.backgroundImage}
+    >
+      <View style={[styles.leftContainer, isLandscape && styles.leftContainerLandscape]}>
+        <Image
+          source={dneImg}
+          style={[styles.dneImage, isLandscape && styles.dneImageLandscape]}
+          resizeMode="contain"
+        />
+        <Image
+          source={getProfilePicture(profilePicture)}
+          style={[
+            styles.profilePicture,
+            isLandscape && styles.profilePictureLandscape,
+          ]}
+        />
+      </View>
+
       <Image source={uneImg} style={styles.uneImage} resizeMode="contain" />
-      
-      <View style={[styles.infoContainer, isLandscape && styles.infoContainerLandscape]}>
+
+      <View
+        style={[
+          styles.infoContainer,
+          isLandscape && styles.infoContainerLandscape,
+        ]}
+      >
         <Text style={styles.text}>
           <Text style={styles.boldText}>Nome: </Text>
           {name}
@@ -76,10 +97,15 @@ const DocumentCard = ({
         </Text>
       </View>
       <Image source={yearImg} style={styles.yearImage} />
-      <View style={styles.qrCodeContainer}>
+      <View
+        style={[
+          styles.qrCodeContainer,
+          isLandscape && styles.qrCodeContainerLandscape,
+        ]}
+      >
         <QRCode value={_id} size={100} />
       </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -87,7 +113,7 @@ const styles = StyleSheet.create({
   card: {
     padding: 20,
     margin: 25,
-    backgroundColor: "#60B275",
+    backgroundColor: "#58f67a",
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
@@ -99,21 +125,46 @@ const styles = StyleSheet.create({
   },
   cardLandscape: {
     flexDirection: "row",
-    height: '250',
-    width: '90%',
+    height: 250,
+    width: "90%",
+  },
+  backgroundImage: {
+    resizeMode: "cover", 
+    borderRadius: 10,
+  },
+  profilePictureContainer: {
+    alignItems: "left",
+  },
+  leftContainerLandscape: {
+    alignItems: "left",
+    justifyContent: "left",
+    marginRight: 20,
+    marginLeft: 15,
   },
   dneImage: {
     width: 130,
     height: 50,
     position: "absolute",
-    top: 15,
-    left: 20,
+    top: -10,
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
   },
   dneImageLandscape: {
     position: "relative",
-    top: 0,
+    top: -10,
     left: 0,
     marginRight: 20,
+  },
+  profilePicture: {
+    width: 125,
+    height: 150,
+    marginTop: 55,
+    marginBottom: 10,
+    alignItems: "center",
+  },
+  profilePictureLandscape: {
+    marginTop: 0,
   },
   uneImage: {
     width: 125,
@@ -131,14 +182,14 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     position: "absolute",
-    bottom: 50,
+    bottom: 40,
     left: 20,
   },
   infoContainerLandscape: {
     position: "relative",
     bottom: 0,
     left: 20,
-    alignItems: "flex-start", 
+    alignItems: "flex-start",
     justifyContent: "center",
     flex: 1,
   },
@@ -151,8 +202,11 @@ const styles = StyleSheet.create({
   },
   qrCodeContainer: {
     position: "absolute",
-    top: 80,
+    top: 90,
     right: 20,
+  },
+  qrCodeContainerLandscape: {
+    top: 75,
   },
 });
 
