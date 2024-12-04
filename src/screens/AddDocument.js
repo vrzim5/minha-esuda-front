@@ -38,6 +38,7 @@ const AddDocument = ({ route, navigation }) => {
       course: documentData.data.course || "Unknown date",
       issuer: documentData.data.issuer || "Unknown issuer",
       validity: documentData.data.validity || "Unknown date",
+      profilePicture: documentData.data.profilePicture || null,
     };
   };
 

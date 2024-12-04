@@ -38,7 +38,6 @@ export const logoutUser = async () => {
   }
 };
 
-
 export const getDocumentData = async (qrCodeData) => {
   try {
     const token = await AsyncStorage.getItem("jwtToken");
@@ -52,4 +51,12 @@ export const getDocumentData = async (qrCodeData) => {
     const message = error.response?.data?.message || 'Erro ao obter dados do documento';
     return { success: false, message };
   }
+};
+
+export const getProfilePicture = (profilePicture) => {
+  if (profilePicture) {
+    const pictureURL = API_URL + "/" + profilePicture.replace(/\\/g, "/");
+    return { uri: pictureURL };
+  }
+  return require("../assets/profile-picture.jpg");
 };
