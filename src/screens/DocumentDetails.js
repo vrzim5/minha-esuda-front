@@ -68,7 +68,7 @@ const DocumentDetails = ({ route, navigation }) => {
           <DocumentCard
             {...item}
             accessible={true}
-            accessibilityLabel="Informações do documento"
+            accessibilityLabel="Informações do documento estudantil"
             accessibilityHint="Mostra as informações detalhadas do documento"
           />
         </View>

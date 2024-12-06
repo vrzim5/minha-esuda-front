@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { CameraView, Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
+import ManualInputPopup from "../components/ManualInputPopup";
 
 const { width } = Dimensions.get("window");
 const CAMERA_SIZE = width * 0.7;
@@ -17,9 +18,9 @@ const CAMERA_SIZE = width * 0.7;
 const Scan = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
-
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [manualInputVisible, setManualInputVisible] = useState(false);
 
   useEffect(() => {
     const getCameraPermissions = async () => {
@@ -34,6 +35,11 @@ const Scan = ({ navigation }) => {
     navigation.navigate("AddDocument", { data });
   };
 
+  const handleManualSubmit = (code) => {
+    setManualInputVisible(false);
+    navigation.navigate("AddDocument", { data: code });
+  };
+
   if (hasPermission === null) {
     return <Text>Solicitando permissão da câmera...</Text>;
   }
@@ -41,7 +47,7 @@ const Scan = ({ navigation }) => {
     return <Text>Sem acesso à câmera.</Text>;
   }
 
-  const cameraSize = isLandscape ? width * 0.25 : CAMERA_SIZE;
+  const cameraSize = isLandscape ? width * 0.2 : CAMERA_SIZE;
 
   return (
     <View style={styles.container}> 
@@ -93,6 +99,23 @@ const Scan = ({ navigation }) => {
             onPress={() => setScanned(false)}
           />
         )}
+
+        <TouchableOpacity
+          style={[styles.manualInputButton, isLandscape && styles.manualInputButtonLandscape]}
+          onPress={() => setManualInputVisible(true)}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Digitar o código"
+          accessibilityHint="Toque uma vez para digitar o código manualmente"
+        >
+          <Text style={[styles.buttonText, isLandscape && styles.buttonTextLandscape]}>Digitar o código</Text>
+        </TouchableOpacity>
+
+        <ManualInputPopup
+          visible={manualInputVisible}
+          onSubmit={handleManualSubmit}
+          onCancel={() => setManualInputVisible(false)}
+        />       
 
         <TouchableOpacity
           style={styles.cancelButton}
@@ -174,6 +197,25 @@ const styles = StyleSheet.create({
   },
   camera: {
     flex: 1,
+  },
+  manualInputButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+  },
+  manualInputButtonLandscape: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
+  buttonTextLandscape: {
+    fontSize: 14,
   },
   cancelButtonText: {
     color: "#fff",

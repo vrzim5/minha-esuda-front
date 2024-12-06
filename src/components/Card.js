@@ -41,7 +41,7 @@ const Card = ({ profilePicture, name, _id, validity }) => {
 const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
-    backgroundColor: "#60b275",
+    backgroundColor: "#58f67a",
     borderRadius: 8,
     padding: 16,
     margin: 16,

@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
   confirmDeleteButton: {
     backgroundColor: "red",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: 10,
-    width: "100%",
+    width: "50%",
     alignItems: "center",
   },
   confirmDeleteButtonLandscape: {
@@ -88,9 +88,9 @@ const styles = StyleSheet.create({
   cancelDeleteButton: {
     backgroundColor: "gray",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginTop: 10,
-    width: "100%",
+    width: "50%",
     alignItems: "center",
   },
   cancelDeleteButtonLandscape: {

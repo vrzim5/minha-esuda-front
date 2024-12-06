@@ -48,60 +48,57 @@ const DocumentCard = ({
         />
         <Image
           source={getProfilePicture(profilePicture)}
-          style={[
-            styles.profilePicture,
-            isLandscape && styles.profilePictureLandscape,
-          ]}
+          style={[styles.profilePicture, isLandscape && styles.profilePictureLandscape,]}
+          accessible={true}
+          accessibilityLabel="Foto de perfil"
         />
       </View>
 
       <Image source={uneImg} style={styles.uneImage} resizeMode="contain" />
 
       <View
-        style={[
-          styles.infoContainer,
-          isLandscape && styles.infoContainerLandscape,
-        ]}
+        style={[styles.infoContainer,isLandscape && styles.infoContainerLandscape,]}
+        accessible={true}
+        accessibilityLabel={`Informações do documento de ${name}`}
       >
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`Nome: ${name}`}>
           <Text style={styles.boldText}>Nome: </Text>
           {name}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`CPF: ${cpf}`}>
           <Text style={styles.boldText}>CPF: </Text>
           {cpf}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`Data de Nascimento: ${formatDate(birthDate)}`}>
           <Text style={styles.boldText}>Data de Nascimento: </Text>
           {formatDate(birthDate)}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`Instituição: ${institution}`}>
           <Text style={styles.boldText}>Instituição: </Text>
           {institution}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`Curso: ${course}`}>
           <Text style={styles.boldText}>Curso: </Text>
           {course}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`Emissor: ${issuer}`}>
           <Text style={styles.boldText}>Emissor: </Text>
           {issuer}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`ID: ${_id}`}>
           <Text style={styles.boldText}>ID: </Text>
           {_id}
         </Text>
-        <Text style={styles.text}>
+        <Text style={styles.text} accessible={true} accessibilityLabel={`Válido até: ${formatDate(validity)}`}>
           <Text style={styles.boldText}>Válido até: </Text>
           {formatDate(validity)}
         </Text>
       </View>
       <Image source={yearImg} style={styles.yearImage} />
       <View
-        style={[
-          styles.qrCodeContainer,
-          isLandscape && styles.qrCodeContainerLandscape,
-        ]}
+        style={[styles.qrCodeContainer,isLandscape && styles.qrCodeContainerLandscape,]}
+        accessible={true}
+        accessibilityLabel="QR Code do documento"
       >
         <QRCode value={_id} size={100} />
       </View>
@@ -162,6 +159,7 @@ const styles = StyleSheet.create({
     marginTop: 55,
     marginBottom: 10,
     alignItems: "center",
+    borderRadius: 10,
   },
   profilePictureLandscape: {
     marginTop: 0,

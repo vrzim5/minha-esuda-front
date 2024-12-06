@@ -12,14 +12,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
-
-const isValidEmail = (email) => {
-  const regex = /\S+@\S+\.\S+/; 
-  if (!regex.test(email)) {
-    return false; 
-  }
-  return email.endsWith("@esuda.edu.br");
-};
+import { isValidEmail } from "../utils/date";
 
 const Login = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -67,7 +60,7 @@ const Login = ({ navigation }) => {
             source={require('../assets/LogoEsuda.png')} 
             style={styles.overlayImage}
             accessible={true}
-            accessibilityLabel="Logo da Esuda"
+            accessibilityLabel="Imagem da Logo da Esuda"
           />
         </View>
       )}

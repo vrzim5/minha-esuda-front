@@ -103,7 +103,7 @@ const AddDocument = ({ route, navigation }) => {
           accessibilityLabel="Cancelar"
           accessibilityHint="Toque uma vez para cancelar"
         >
-          <Text>Cancelar</Text>
+          <Text style={styles.cancelButtonText}>Cancelar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   addButton: {
     backgroundColor: "#4CAF50",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
   },
   addButtonText: {
@@ -187,8 +187,12 @@ const styles = StyleSheet.create({
   cancelButton: {
     backgroundColor: "#f44336",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     marginBottom: 10,
+  },
+  cancelButtonText:{
+    color: "#fff",
+    fontSize: 16,
   },
   buttonLandscape: {
     marginVertical: 0,
