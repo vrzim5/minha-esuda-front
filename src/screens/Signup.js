@@ -11,10 +11,7 @@ import {
   useWindowDimensions,
 } from "react-native";
 import { registerUser } from "../services/api";
-
-const isValidEmail = (email) => {
-  return email.endsWith("@esuda.edu.br");
-};
+import { isValidEmail } from "../utils/date";
 
 const Signup = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -72,6 +69,8 @@ const Signup = ({ navigation }) => {
         <Image
           source={require('../assets/LogoEsuda.png')}
           style={styles.overlayImage}
+          accessible={true}
+          accessibilityLabel="Imagem da Logo da Esuda"
         />
       </View>
      )}

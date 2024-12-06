@@ -5,3 +5,11 @@ export const formatDate = (date) => {
     const year = d.getFullYear();
     return `${day}/${month}/${year}`;
   };
+
+export const isValidEmail = (email) => {
+    const regex = /\S+@\S+\.\S+/; 
+    if (!regex.test(email)) {
+      return false; 
+    }
+    return email.endsWith("@esuda.edu.br");
+  };
