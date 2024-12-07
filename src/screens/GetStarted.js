@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
   },
   titleLandscape: {
     fontSize: 30,
+    marginBottom: -10,
     textAlign: "center",
   },
   image: {
@@ -121,12 +122,12 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#fff",
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
   },
   buttonTextLandscape: {
-    fontSize: 20,
+    fontSize: 15,
   },
 });
 

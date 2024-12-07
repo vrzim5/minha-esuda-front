@@ -92,7 +92,7 @@ const AddDocument = ({ route, navigation }) => {
           accessibilityLabel="Adicionar"
           accessibilityHint="Toque uma vez para adicionar o documento"
         >
-          <Text style={styles.addButtonText}>Adicionar</Text>
+          <Text style={[styles.addButtonText, isLandscape && styles.buttonSizeLandscape]}>Adicionar</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -103,7 +103,7 @@ const AddDocument = ({ route, navigation }) => {
           accessibilityLabel="Cancelar"
           accessibilityHint="Toque uma vez para cancelar"
         >
-          <Text style={styles.cancelButtonText}>Cancelar</Text>
+          <Text style={[styles.cancelButtonText, isLandscape && styles.buttonSizeLandscape]}>Cancelar</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -129,7 +129,8 @@ const styles = StyleSheet.create({
   },
   titleLandscape: {
     fontSize: 20,
-    marginBottom: 10,
+    marginBottom: -20,
+    marginTop: 15,
   },
   subtitle: {
     fontSize: 16,
@@ -137,7 +138,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   subtitleLandscape: {
-    marginBottom: 0,
+    display: "none",
   },
   cardContainer: {
     width: "100%",
@@ -196,8 +197,11 @@ const styles = StyleSheet.create({
   },
   buttonLandscape: {
     marginVertical: 0,
-    marginHorizontal: 10,
-    marginTop: -20,
+    marginHorizontal: 15,
+    marginTop: -25,
+  },
+  buttonSizeLandscape: {
+    fontSize: 14,
   },
 });
 
