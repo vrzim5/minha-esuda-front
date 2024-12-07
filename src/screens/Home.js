@@ -67,8 +67,8 @@ const Home = ({ navigation }) => {
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
           <Ionicons
-            name="document-text-outline"
-            size={120}
+            name="id-card"
+            size={150}
             color="#DB914A"
             style={styles.placeholderIcon}
           />
@@ -113,7 +113,7 @@ const Home = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "white",
   },
   header: {
     width: "100%",
