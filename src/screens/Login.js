@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Image, 
   useWindowDimensions,
+  Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
@@ -21,6 +22,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -50,6 +52,11 @@ const Login = ({ navigation }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePasswordReset = () => {
+    Alert.alert("Sucesso", "Um código de recuperação foi enviado.");
+    setModalVisible(false);
   };
 
   return (
@@ -105,6 +112,57 @@ const Login = ({ navigation }) => {
         </TouchableOpacity>
 
         {loading && <ActivityIndicator size="large" color="#1e90ff" />}
+
+        <TouchableOpacity
+          style={styles.forgotPasswordButton}
+          onPress={() => setModalVisible(true)}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Esqueci minha senha"
+          accessibilityHint="Toque uma vez para recuperar sua senha"
+        >
+          <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
+        </TouchableOpacity>
+
+        <Modal
+        transparent={true}
+        visible={modalVisible}
+        animationType="slide"
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Recuperar Senha</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Digite seu email"
+              accessible={true}
+              accessibilityLabel="Email para recuperação"
+              accessibilityHint="Digite seu email para recuperação de senha"
+            />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={handlePasswordReset}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Enviar email de recuperação"
+              accessibilityHint="Toque uma vez para enviar o email de recuperação"
+            >
+              <Text style={styles.buttonText}>Enviar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.cancelButton}
+              onPress={() => setModalVisible(false)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Cancelar"
+              accessibilityHint="Toque uma vez para cancelar"
+            >
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
 
         <View style={styles.signupContainer}>
           <Text style={styles.Text} 
@@ -205,6 +263,40 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
+  },
+  forgotPasswordButton: {
+    marginTop: 10,
+    alignItems: "center",
+  },
+  forgotPasswordText: {
+    color: "#4CAF50",
+    fontSize: 14,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 18,
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  cancelButton: {
+    backgroundColor: "gray",
+    padding: 10,
+    borderRadius: 15,
+    marginTop: 10,
+    width: "50%",
+    alignItems: "center",
   },
   signupContainer: {
     flexDirection: 'row',  
