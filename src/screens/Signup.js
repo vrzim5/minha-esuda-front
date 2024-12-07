@@ -9,6 +9,8 @@ import {
   ActivityIndicator,
   Image,
   useWindowDimensions,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { registerUser } from "../services/api";
 import { isValidEmail } from "../utils/date";
@@ -49,7 +51,10 @@ const Signup = ({ navigation }) => {
       const normalizedEmail = email.toLowerCase();
       const response = await registerUser(normalizedEmail, password, name);
       if (response.success) {
-        Alert.alert("Cadastro realizado com sucesso", "Agora você pode fazer login.");
+        Alert.alert(
+          "Cadastro realizado com sucesso",
+          "Agora você pode fazer login."
+        );
         navigation.navigate("Login");
       } else {
         Alert.alert("Falha no cadastro", response.message);
@@ -63,117 +68,131 @@ const Signup = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {!isLandscape && (
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('../assets/LogoEsuda.png')}
-          style={styles.overlayImage}
-          accessible={true}
-          accessibilityLabel="Imagem da Logo da Esuda"
-        />
-      </View>
-     )}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        {!isLandscape && (
+          <View style={styles.logoContainer}>
+            <Image
+              source={require("../assets/LogoEsuda.png")}
+              style={styles.overlayImage}
+              accessible={true}
+              accessibilityLabel="Imagem da Logo da Esuda"
+            />
+          </View>
+        )}
 
-      <View style={styles.formContainer}>
-        <Text style={[styles.title, isLandscape && styles.titleLandscape]} 
-        accessible={true} 
-        accessibilityRole="header"
-        >
-          Cadastrar
-        </Text>
-        <TextInput
-          style={[styles.input, isLandscape && styles.inputLandscape]}
-          placeholder="Nome"
-          value={name}
-          onChangeText={setName}
-          accessible={true}
-          accessibilityLabel="Nome"
-          accessibilityHint="Digite seu nome completo"
-        />
-        <TextInput
-          style={[styles.input, isLandscape && styles.inputLandscape]}
-          placeholder="Ex: 00000000@esuda.edu.br"
-          value={email}
-          onChangeText={setEmail}
-          accessible={true}
-          accessibilityLabel="Email"
-          accessibilityHint="Digite seu e-mail institucional"
-        />
-        <TextInput
-          style={[styles.input, isLandscape && styles.inputLandscape]}
-          placeholder="Senha"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          accessible={true}
-          accessibilityLabel="Senha"
-          accessibilityHint="Digite sua senha"
-        />
-        <TextInput
-          style={[styles.input, isLandscape && styles.inputLandscape]}
-          placeholder="Confirmar Senha"
-          value={confirmPassword}
-          onChangeText={setConfirmPassword}
-          secureTextEntry
-          accessible={true}
-          accessibilityLabel="Confirmar Senha"
-          accessibilityHint="Digite sua senha novamente"
-        />
-        <TouchableOpacity
-          style={[styles.button, isLandscape && styles.buttonLandscape]}
-          onPress={handleSignup}
-          disabled={loading}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Cadastrar"
-          accessibilityHint="Toque duas vezes para se cadastrar"
-        >
-          <Text style={styles.buttonText}>{loading ? "Carregando..." : "Cadastrar"}</Text>
-        </TouchableOpacity>
-
-        {loading && <ActivityIndicator size="large" color="#1e90ff" />}
-
-        <View style={[styles.loginLinkContainer, isLandscape && styles.loginLinkContainerLandscape]}>
-          <Text style={styles.Text} accessible={true} accessibilityLabel="Já tem uma conta?">
-            Já tem uma conta? 
+        <View style={styles.formContainer}>
+          <Text
+            style={[styles.title, isLandscape && styles.titleLandscape]}
+            accessible={true}
+            accessibilityRole="header"
+          >
+            Cadastrar
           </Text>
+          <TextInput
+            style={[styles.input, isLandscape && styles.inputLandscape]}
+            placeholder="Nome"
+            value={name}
+            onChangeText={setName}
+            accessible={true}
+            accessibilityLabel="Nome"
+            accessibilityHint="Digite seu nome completo"
+          />
+          <TextInput
+            style={[styles.input, isLandscape && styles.inputLandscape]}
+            placeholder="Ex: 00000000@esuda.edu.br"
+            value={email}
+            onChangeText={setEmail}
+            accessible={true}
+            accessibilityLabel="Email"
+            accessibilityHint="Digite seu e-mail institucional"
+          />
+          <TextInput
+            style={[styles.input, isLandscape && styles.inputLandscape]}
+            placeholder="Senha"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            accessible={true}
+            accessibilityLabel="Senha"
+            accessibilityHint="Digite sua senha"
+          />
+          <TextInput
+            style={[styles.input, isLandscape && styles.inputLandscape]}
+            placeholder="Confirmar Senha"
+            value={confirmPassword}
+            onChangeText={setConfirmPassword}
+            secureTextEntry
+            accessible={true}
+            accessibilityLabel="Confirmar Senha"
+            accessibilityHint="Digite sua senha novamente"
+          />
           <TouchableOpacity
-          onPress={() => navigation.navigate("Login")}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Logar-se"
-          accessibilityHint="Toque uma vez para ir para a tela de login"
-        >
-          <Text style={styles.linkText}> Logar-se</Text>
-        </TouchableOpacity>
+            style={[styles.button, isLandscape && styles.buttonLandscape]}
+            onPress={handleSignup}
+            disabled={loading}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Cadastrar"
+            accessibilityHint="Toque duas vezes para se cadastrar"
+          >
+            <Text style={styles.buttonText}>
+              {loading ? "Carregando..." : "Cadastrar"}
+            </Text>
+          </TouchableOpacity>
+
+          {loading && <ActivityIndicator size="large" color="#1e90ff" />}
+
+          <View
+            style={[
+              styles.loginLinkContainer,
+              isLandscape && styles.loginLinkContainerLandscape,
+            ]}
+          >
+            <Text
+              style={styles.Text}
+              accessible={true}
+              accessibilityLabel="Já tem uma conta?"
+            >
+              Já tem uma conta?
+            </Text>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Login")}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Logar-se"
+              accessibilityHint="Toque uma vez para ir para a tela de login"
+            >
+              <Text style={styles.linkText}> Logar-se</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#DB914A", 
-    justifyContent: "flex-start", 
+    backgroundColor: "#DB914A",
+    justifyContent: "flex-start",
   },
   logoContainer: {
-    flex: 1,  
-    justifyContent: "center",  
-    alignItems: "center", 
-    position: 'relative',
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   overlayImage: {
     marginTop: "10%",
-    width: 200, 
+    width: 200,
     height: 200,
-    resizeMode: 'contain', 
+    resizeMode: "contain",
   },
   formContainer: {
-    flex: 2, 
-    marginTop: -50,  
+    flex: 2,
+    marginTop: -50,
     width: "100%",
     top: 75,
     backgroundColor: "#fff",
@@ -186,18 +205,19 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.8,
     shadowRadius: 2,
-    elevation: 5, 
+    elevation: 5,
     alignItems: "center",
   },
   title: {
     fontSize: 50,
     fontWeight: "bold",
     marginBottom: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   titleLandscape: {
-    fontSize: 30,
-    marginTop: -25,
+    fontSize: 25,
+    marginTop: -30,
+    marginBottom: 8,
   },
   input: {
     width: "100%",
@@ -210,10 +230,9 @@ const styles = StyleSheet.create({
     color: "#808080",
   },
   inputLandscape: {
-    width: "70%",
+    width: "55%",
     padding: 9,
-    marginBottom: 12,
-    
+    marginBottom: 10,
   },
   button: {
     backgroundColor: "#61B375",
@@ -226,8 +245,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonLandscape: {
-    marginTop: 2,
-    marginHorizontal: 300,
+    marginTop: 0,
+    marginHorizontal: 100,
   },
   buttonText: {
     color: "#fff",
@@ -235,20 +254,22 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   loginLinkContainer: {
-    flexDirection: 'row', 
-    justifyContent: 'center', 
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 16,
   },
   loginLinkContainerLandscape: {
-    marginTop: 8,
+    marginTop: 5,
   },
   linkText: {
-    color: "#DB914A", 
+    color: "#DB914A",
+    fontSize: 13,
     fontWeight: "bold",
   },
   Text: {
     color: "#000",
     fontWeight: "bold",
+    fontSize: 13,
   },
 });
 

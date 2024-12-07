@@ -7,9 +7,11 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
-  Image, 
+  Image,
   useWindowDimensions,
   Modal,
+  Keyboard,
+  TouchableWithoutFeedback,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
@@ -31,7 +33,10 @@ const Login = ({ navigation }) => {
     }
 
     if (!isValidEmail(email)) {
-      Alert.alert("Erro", "O e-mail utilizado não é um e-mail institucional Esuda.");
+      Alert.alert(
+        "Erro",
+        "O e-mail utilizado não é um e-mail institucional Esuda."
+      );
       return;
     }
 
@@ -47,7 +52,10 @@ const Login = ({ navigation }) => {
         Alert.alert("Falha no Login", response.message);
       }
     } catch (error) {
-      Alert.alert("Erro", "Ocorreu um erro ao tentar fazer login. Tente novamente.");
+      Alert.alert(
+        "Erro",
+        "Ocorreu um erro ao tentar fazer login. Tente novamente."
+      );
       console.error(error);
     } finally {
       setLoading(false);
@@ -60,152 +68,167 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      {!isLandscape && (
-        <View style={styles.logoContainer} accessible={true} accessibilityRole="image">
-          <Image
-            source={require('../assets/LogoEsuda.png')} 
-            style={styles.overlayImage}
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        {!isLandscape && (
+          <View
+            style={styles.logoContainer}
             accessible={true}
-            accessibilityLabel="Imagem da Logo da Esuda"
-          />
-        </View>
-      )}
-
-      <View style={styles.formContainer}>
-        <Text style={[styles.title, isLandscape && styles.titleLandscape]} 
-        accessible={true} 
-        accessibilityRole="header"
-        accessibilityLabel="Logar"
-        >
-          Logar
-        </Text>
-        <TextInput
-          style={[styles.input, isLandscape && styles.inputLandscape]}
-          placeholder="Ex: 00000000@esuda.edu.br"
-          value={email}
-          onChangeText={setEmail}
-          accessible={true}
-          accessibilityLabel="Email"
-          accessibilityHint="Digite seu e-mail institucional"
-        />
-        <TextInput
-          style={[styles.input, isLandscape && styles.inputLandscape]}
-          placeholder="Senha"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          accessible={true}
-          accessibilityLabel="Senha"
-          accessibilityHint="Digite sua senha"
-        />
-        <TouchableOpacity
-          style={[styles.button, isLandscape && styles.buttonLandscape]}
-          onPress={handleLogin}
-          disabled={loading}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Entrar"
-          accessibilityHint="Toque uma vez para fazer login"
-        >
-          <Text style={styles.buttonText}>{loading ? "Carregando..." : "Entrar"}</Text>
-        </TouchableOpacity>
-
-        {loading && <ActivityIndicator size="large" color="#1e90ff" />}
-
-        <TouchableOpacity
-          style={styles.forgotPasswordButton}
-          onPress={() => setModalVisible(true)}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Esqueci minha senha"
-          accessibilityHint="Toque uma vez para recuperar sua senha"
-        >
-          <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
-        </TouchableOpacity>
-
-        <Modal
-        transparent={true}
-        visible={modalVisible}
-        animationType="slide"
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalContainer}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Recuperar Senha</Text>
-            <TextInput
-              style={styles.input}
-              placeholder="Digite seu email"
+            accessibilityRole="image"
+          >
+            <Image
+              source={require("../assets/LogoEsuda.png")}
+              style={styles.overlayImage}
               accessible={true}
-              accessibilityLabel="Email para recuperação"
-              accessibilityHint="Digite seu email para recuperação de senha"
+              accessibilityLabel="Imagem da Logo da Esuda"
             />
+          </View>
+        )}
+
+        <View style={styles.formContainer}>
+          <Text
+            style={[styles.title, isLandscape && styles.titleLandscape]}
+            accessible={true}
+            accessibilityRole="header"
+            accessibilityLabel="Logar"
+          >
+            Logar
+          </Text>
+          <TextInput
+            style={[styles.input, isLandscape && styles.inputLandscape]}
+            placeholder="Ex: 00000000@esuda.edu.br"
+            value={email}
+            onChangeText={setEmail}
+            accessible={true}
+            accessibilityLabel="Email"
+            accessibilityHint="Digite seu e-mail institucional"
+          />
+          <TextInput
+            style={[styles.input, isLandscape && styles.inputLandscape]}
+            placeholder="Senha"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+            accessible={true}
+            accessibilityLabel="Senha"
+            accessibilityHint="Digite sua senha"
+          />
+          <TouchableOpacity
+            style={[styles.button, isLandscape && styles.buttonLandscape]}
+            onPress={handleLogin}
+            disabled={loading}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Entrar"
+            accessibilityHint="Toque uma vez para fazer login"
+          >
+            <Text style={styles.buttonText}>
+              {loading ? "Carregando..." : "Entrar"}
+            </Text>
+          </TouchableOpacity>
+
+          {loading && <ActivityIndicator size="large" color="#1e90ff" />}
+
+          <TouchableOpacity
+            style={styles.forgotPasswordButton}
+            onPress={() => setModalVisible(true)}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Esqueci minha senha"
+            accessibilityHint="Toque uma vez para recuperar sua senha"
+          >
+            <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
+          </TouchableOpacity>
+          <Modal
+            transparent={true}
+            visible={modalVisible}
+            animationType="slide"
+            onRequestClose={() => setModalVisible(false)}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>Recuperar Senha</Text>
+                <TextInput
+                  style={styles.input}
+                  placeholder="Digite seu email"
+                  accessible={true}
+                  accessibilityLabel="Email para recuperação"
+                  accessibilityHint="Digite seu email para recuperação de senha"
+                />
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={handlePasswordReset}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Enviar email de recuperação"
+                  accessibilityHint="Toque uma vez para enviar o email de recuperação"
+                >
+                  <Text style={styles.buttonText}>Enviar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={() => setModalVisible(false)}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Cancelar"
+                  accessibilityHint="Toque uma vez para cancelar"
+                >
+                  <Text style={styles.buttonText}>Cancelar</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </Modal>
+
+          <View
+            style={[
+              styles.signupContainer,
+              isLandscape && styles.signupContainerLandscape,
+            ]}
+          >
+            <Text
+              style={styles.Text}
+              accessible={true}
+              accessibilityLabel="Não tem uma conta?"
+            >
+              Não tem uma conta?
+            </Text>
             <TouchableOpacity
-              style={styles.button}
-              onPress={handlePasswordReset}
+              onPress={() => navigation.navigate("Signup")}
               accessible={true}
               accessibilityRole="button"
-              accessibilityLabel="Enviar email de recuperação"
-              accessibilityHint="Toque uma vez para enviar o email de recuperação"
+              accessibilityLabel="Cadastrar-se"
+              accessibilityHint="Toque uma vez para ir para a tela de cadastro"
             >
-              <Text style={styles.buttonText}>Enviar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={() => setModalVisible(false)}
-              accessible={true}
-              accessibilityRole="button"
-              accessibilityLabel="Cancelar"
-              accessibilityHint="Toque uma vez para cancelar"
-            >
-              <Text style={styles.buttonText}>Cancelar</Text>
+              <Text style={styles.linkText}> Cadastrar-se</Text>
             </TouchableOpacity>
           </View>
         </View>
-      </Modal>
-
-        <View style={styles.signupContainer}>
-          <Text style={styles.Text} 
-          accessible={true} 
-          accessibilityLabel="Não tem uma conta?">
-            Não tem uma conta? 
-          </Text>
-          <TouchableOpacity
-          onPress={() => navigation.navigate("Signup")}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Cadastrar-se"
-          accessibilityHint="Toque uma vez para ir para a tela de cadastro"
-        >
-          <Text style={styles.linkText}> Cadastrar-se</Text>
-        </TouchableOpacity>
-        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { 
+  container: {
     flex: 1,
-    backgroundColor: "#DB914A", 
-    justifyContent: "flex-start", 
+    backgroundColor: "#DB914A",
+    justifyContent: "flex-start",
   },
-  logoContainer: { 
-    flex: 1, 
-    justifyContent: "center",  
-    alignItems: "center", 
-    position: 'relative',
+  logoContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
   },
   overlayImage: {
     marginTop: "10%",
-    width: 200, 
+    width: 200,
     height: 200,
-    resizeMode: 'contain', 
+    resizeMode: "contain",
   },
   formContainer: {
-    flex: 2, 
-    marginTop: -50,  
+    flex: 2,
+    marginTop: -50,
     width: "100%",
     top: 99,
     backgroundColor: "#fff",
@@ -225,7 +248,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: "bold",
     marginBottom: 24,
-    textAlign: 'center',
+    textAlign: "center",
   },
   titleLandscape: {
     fontSize: 40,
@@ -243,7 +266,7 @@ const styles = StyleSheet.create({
     color: "#808080",
   },
   inputLandscape: {
-    width: "70%",
+    width: "55%",
   },
   button: {
     backgroundColor: "#61B375",
@@ -256,8 +279,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonLandscape: {
-    marginTop: 15,
-    marginHorizontal: 300,
+    marginTop: 0,
+    marginHorizontal: 100,
   },
   buttonText: {
     color: "#fff",
@@ -299,17 +322,22 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   signupContainer: {
-    flexDirection: 'row',  
-    justifyContent: 'center', 
+    flexDirection: "row",
+    justifyContent: "center",
     marginTop: 16,
   },
+  signupContainerLandscape: {
+    marginTop: 5,
+  },
   linkText: {
-    color: "#DB914A", 
+    color: "#DB914A",
     fontWeight: "bold",
+    fontSize: 13,
   },
   Text: {
-    color: "#000", 
+    color: "#000",
     fontWeight: "bold",
+    fontSize: 13,
   },
 });
 
