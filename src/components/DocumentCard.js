@@ -16,6 +16,7 @@ import uneImg from "../assets/une.png";
 import { getProfilePicture } from "../services/api";
 import { formatDate } from "../utils/date";
 
+// Componente DocumentCard que exibe informações do documento
 const DocumentCard = ({
   name,
   cpf,
@@ -27,28 +28,43 @@ const DocumentCard = ({
   validity,
   profilePicture,
 }) => {
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
 
   const backgroundImage = isLandscape
     ? require("../assets/background1.png")
     : require("../assets/background2.png");
 
+  // Retorna o componente DocumentCard
   return (
+    // Componente ImageBackground para definir a imagem de fundo do cartão
     <ImageBackground
       source={backgroundImage}
       style={[styles.card, isLandscape && styles.cardLandscape]}
       imageStyle={styles.backgroundImage}
     >
-      <View style={[styles.leftContainer, isLandscape && styles.leftContainerLandscape]}>
+      {/* Container para a imagem de perfil e imagem da dne */}
+      <View
+        style={[
+          styles.leftContainer,
+          isLandscape && styles.leftContainerLandscape,
+        ]}
+      >
+        {/* Componente Image para exibir a imagem dne */}
         <Image
           source={dneImg}
           style={[styles.dneImage, isLandscape && styles.dneImageLandscape]}
           resizeMode="contain"
         />
+        {/* Componente Image para exibir a imagem de perfil */}
         <Image
           source={getProfilePicture(profilePicture)}
-          style={[styles.profilePicture, isLandscape && styles.profilePictureLandscape,]}
+          style={[
+            styles.profilePicture,
+            isLandscape && styles.profilePictureLandscape,
+          ]}
           accessible={true}
           accessibilityLabel="Foto de perfil"
         />
@@ -56,47 +72,86 @@ const DocumentCard = ({
 
       <Image source={uneImg} style={styles.uneImage} resizeMode="contain" />
 
+      {/* Container para as informações do documento */}
       <View
-        style={[styles.infoContainer,isLandscape && styles.infoContainerLandscape,]}
+        style={[
+          styles.infoContainer,
+          isLandscape && styles.infoContainerLandscape,
+        ]}
         accessible={true}
         accessibilityLabel={`Informações do documento de ${name}`}
       >
-        <Text style={styles.text} accessible={true} accessibilityLabel={`Nome: ${name}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`Nome: ${name}`}
+        >
           <Text style={styles.boldText}>Nome: </Text>
           {name}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`CPF: ${cpf}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`CPF: ${cpf}`}
+        >
           <Text style={styles.boldText}>CPF: </Text>
           {cpf}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`Data de Nascimento: ${formatDate(birthDate)}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`Data de Nascimento: ${formatDate(birthDate)}`}
+        >
           <Text style={styles.boldText}>Data de Nascimento: </Text>
           {formatDate(birthDate)}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`Instituição: ${institution}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`Instituição: ${institution}`}
+        >
           <Text style={styles.boldText}>Instituição: </Text>
           {institution}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`Curso: ${course}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`Curso: ${course}`}
+        >
           <Text style={styles.boldText}>Curso: </Text>
           {course}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`Emissor: ${issuer}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`Emissor: ${issuer}`}
+        >
           <Text style={styles.boldText}>Emissor: </Text>
           {issuer}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`ID: ${_id}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`ID: ${_id}`}
+        >
           <Text style={styles.boldText}>ID: </Text>
           {_id}
         </Text>
-        <Text style={styles.text} accessible={true} accessibilityLabel={`Válido até: ${formatDate(validity)}`}>
+        <Text
+          style={styles.text}
+          accessible={true}
+          accessibilityLabel={`Válido até: ${formatDate(validity)}`}
+        >
           <Text style={styles.boldText}>Válido até: </Text>
           {formatDate(validity)}
         </Text>
       </View>
       <Image source={yearImg} style={styles.yearImage} />
       <View
-        style={[styles.qrCodeContainer,isLandscape && styles.qrCodeContainerLandscape,]}
+        style={[
+          styles.qrCodeContainer,
+          isLandscape && styles.qrCodeContainerLandscape,
+        ]}
         accessible={true}
         accessibilityLabel="QR Code do documento"
       >
@@ -106,6 +161,7 @@ const DocumentCard = ({
   );
 };
 
+// Estilos do componente DocumentCard
 const styles = StyleSheet.create({
   card: {
     padding: 20,
@@ -126,7 +182,7 @@ const styles = StyleSheet.create({
     width: "90%",
   },
   backgroundImage: {
-    resizeMode: "cover", 
+    resizeMode: "cover",
     borderRadius: 10,
   },
   profilePictureContainer: {

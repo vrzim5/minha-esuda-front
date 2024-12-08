@@ -11,14 +11,19 @@ import DocumentCard from "../components/DocumentCard";
 import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import DeletePopups from "../components/DeletePopups";
 
+// Componente DocumentDetails que exibe os detalhes de um documento
 const DocumentDetails = ({ route, navigation }) => {
+  // Obtém os parâmetros da rota
   const { item } = route.params;
-  
+
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Função para lidar com a exclusão do documento
   const handleDelete = async () => {
     try {
       const documents = await AsyncStorage.getItem("documents");
@@ -34,8 +39,10 @@ const DocumentDetails = ({ route, navigation }) => {
     }
   };
 
+  // Retorna a interface da tela de detalhes do documento
   return (
     <View style={styles.container}>
+      {/* Cabeçalho com botão de voltar */}
       <View style={[styles.header, isLandscape && styles.headerLandscape]}>
         <TouchableOpacity
           style={styles.backButton}
@@ -49,6 +56,7 @@ const DocumentDetails = ({ route, navigation }) => {
         </TouchableOpacity>
       </View>
 
+      {/* Título da tela */}
       <Text
         style={[styles.title, isLandscape && styles.titleLandscape]}
         accessible={true}
@@ -58,6 +66,7 @@ const DocumentDetails = ({ route, navigation }) => {
         Detalhes do documento
       </Text>
 
+      {/* Verifica se o item existe e exibe os detalhes do documento */}
       {item && (
         <View
           style={[
@@ -65,6 +74,7 @@ const DocumentDetails = ({ route, navigation }) => {
             isLandscape && styles.cardContainerLandscape,
           ]}
         >
+          {/* Componente DocumentCard para exibir as informações do documento */}
           <DocumentCard
             {...item}
             accessible={true}
@@ -75,7 +85,10 @@ const DocumentDetails = ({ route, navigation }) => {
       )}
 
       <TouchableOpacity
-        style={[ styles.deleteButton, isLandscape && styles.deleteButtonLandscape,]}
+        style={[
+          styles.deleteButton,
+          isLandscape && styles.deleteButtonLandscape,
+        ]}
         onPress={() => setModalVisible(true)}
         accessible={true}
         accessibilityRole="button"
@@ -84,7 +97,7 @@ const DocumentDetails = ({ route, navigation }) => {
       >
         <FontAwesome name="trash" size={24} color="white" />
       </TouchableOpacity>
-
+      {/* Componente DeletePopups para exibir o modal de confirmação de exclusão */}
       <DeletePopups
         visible={modalVisible}
         onDelete={handleDelete}
@@ -94,6 +107,7 @@ const DocumentDetails = ({ route, navigation }) => {
   );
 };
 
+// Estilos do componente
 const styles = StyleSheet.create({
   container: {
     flex: 1,

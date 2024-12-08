@@ -15,16 +15,21 @@ import {
 import { registerUser } from "../services/api";
 import { isValidEmail } from "../utils/date";
 
+// Tela de cadastro
 const Signup = ({ navigation }) => {
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
 
+  // Estados para os campos do formulário e para o carregamento
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
+  // Função para lidar com o cadastro do usuário
   const handleSignup = async () => {
     if (!name || !email || !password || !confirmPassword) {
       Alert.alert("Erro", "Por favor, preencha todos os campos.");
@@ -46,6 +51,7 @@ const Signup = ({ navigation }) => {
       return;
     }
 
+    // Realiza o cadastro do usuário
     setLoading(true);
     try {
       const normalizedEmail = email.toLowerCase();
@@ -67,8 +73,11 @@ const Signup = ({ navigation }) => {
     }
   };
 
+  // Retorna a interface da tela de cadastro
   return (
+    // Componente TouchableWithoutFeedback para fechar o teclado ao clicar fora
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* Container principal */}
       <View style={styles.container}>
         {!isLandscape && (
           <View style={styles.logoContainer}>
@@ -80,7 +89,7 @@ const Signup = ({ navigation }) => {
             />
           </View>
         )}
-
+        {/* Container do formulário */}
         <View style={styles.formContainer}>
           <Text
             style={[styles.title, isLandscape && styles.titleLandscape]}
@@ -140,9 +149,9 @@ const Signup = ({ navigation }) => {
               {loading ? "Carregando..." : "Cadastrar"}
             </Text>
           </TouchableOpacity>
-
+          {/* Exibe o indicador de carregamento */}
           {loading && <ActivityIndicator size="large" color="#1e90ff" />}
-
+          {/* Link para a tela de login */}
           <View
             style={[
               styles.loginLinkContainer,
@@ -172,6 +181,7 @@ const Signup = ({ navigation }) => {
   );
 };
 
+// Estilos da tela de cadastro
 const styles = StyleSheet.create({
   container: {
     flex: 1,

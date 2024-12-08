@@ -1,36 +1,49 @@
 import React from "react";
-import { 
-  View, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacity, 
-  Image, 
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
   useWindowDimensions,
 } from "react-native";
 
+// Componente GetStarted que exibe a tela inicial do aplicativo
 const GetStarted = ({ navigation }) => {
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
+
+  // Retorna a interface da tela inicial
   return (
     <View style={[styles.container, isLandscape && styles.containerLandscape]}>
+      {/* Container do título */}
       <View
-        style={[styles.titleContainer, isLandscape && styles.titleContainerLandscape]}
+        style={[
+          styles.titleContainer,
+          isLandscape && styles.titleContainerLandscape,
+        ]}
         accessible={true}
         accessibilityRole="header"
       >
-        <Text style={[styles.title, isLandscape && styles.titleLandscape]}
-        accessibilityLabel="Bem-vindo(a)">
+        {/* Título da tela */}
+        <Text
+          style={[styles.title, isLandscape && styles.titleLandscape]}
+          accessibilityLabel="Bem-vindo(a)"
+        >
           Bem-vindo(a) ao Minha Esuda
         </Text>
       </View>
 
+      {/* Imagem de uma carteira estudantil */}
       <Image
         source={require("../assets/carteirinha.png")}
         style={[styles.image, isLandscape && styles.imageLandscape]}
         accessible={true}
         accessibilityLabel="Imagem de uma carteira estudantil"
       />
-
+      {/* Subtítulo da tela */}
       <Text
         style={[styles.subtitle, isLandscape && styles.subtitleLandscape]}
         accessible={true}
@@ -39,6 +52,7 @@ const GetStarted = ({ navigation }) => {
         Sua carteira estudantil toda digital
       </Text>
 
+      {/* Botão para ir para a tela de login */}
       <TouchableOpacity
         style={[styles.button, isLandscape && styles.buttonLandscape]}
         onPress={() => navigation.navigate("Login")}
@@ -47,19 +61,24 @@ const GetStarted = ({ navigation }) => {
         accessibilityLabel="Começar"
         accessibilityHint="Toque uma vez para ir para a tela de cadastro"
       >
-        <Text style={[styles.buttonText, isLandscape && styles.buttonTextLandscape]}>Começar</Text>
+        <Text
+          style={[styles.buttonText, isLandscape && styles.buttonTextLandscape]}
+        >
+          Começar
+        </Text>
       </TouchableOpacity>
     </View>
   );
 };
 
+// Estilos da tela GetStarted
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#DB914A", 
+    backgroundColor: "#DB914A",
   },
   containerLandscape: {
     justifyContent: "center",
@@ -81,7 +100,7 @@ const styles = StyleSheet.create({
     fontSize: 50,
     fontWeight: "bold",
     color: "#fff",
-    textAlign: "left", 
+    textAlign: "left",
   },
   titleLandscape: {
     fontSize: 30,
@@ -102,7 +121,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
-    color: "#fff", 
+    color: "#fff",
     textAlign: "center",
     marginBottom: 90,
   },
@@ -111,7 +130,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   button: {
-    backgroundColor: "#61B375", 
+    backgroundColor: "#61B375",
     paddingVertical: 15,
     paddingHorizontal: 80,
     borderRadius: 50,
