@@ -11,12 +11,15 @@ import { getDocumentData } from "../services/api";
 import DocumentCard from "../components/DocumentCard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+// Componente AddDocument que permite adicionar um novo documento
 const AddDocument = ({ route, navigation }) => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
 
+  // Obtém os dados do documento da rota
   const { data } = route.params;
 
+  // Hook para armazenar as informações do documento
   const [documentInfo, setDocumentInfo] = useState(null);
   useEffect(() => {
     const fetchDocumentData = async () => {
@@ -26,6 +29,7 @@ const AddDocument = ({ route, navigation }) => {
     fetchDocumentData();
   }, [data]);
 
+  // Função para obter os dados do documento
   const parseDocumentData = async (data) => {
     const documentData = await getDocumentData(data);
     console.log(`${JSON.stringify(documentData)}`);
@@ -42,6 +46,7 @@ const AddDocument = ({ route, navigation }) => {
     };
   };
 
+  // Função para lidar com a adição do documento
   const handleAdd = async () => {
     try {
       const documentList =
@@ -54,8 +59,10 @@ const AddDocument = ({ route, navigation }) => {
     }
   };
 
+  // Retorna a interface da tela de adição de documento
   return documentInfo ? (
     <View style={styles.container}>
+      {/* Campo de entrada para as informações do documento */}
       <Text
         style={[styles.title, isLandscape && styles.titleLandscape]}
         accessible={true}
@@ -72,7 +79,7 @@ const AddDocument = ({ route, navigation }) => {
       >
         Verifique se as informações do seu documento estão corretas
       </Text>
-
+      {/* Exibe as informações do documento */}
       {documentInfo && (
         <View style={styles.cardContainer}>
           <DocumentCard
@@ -83,7 +90,13 @@ const AddDocument = ({ route, navigation }) => {
           />
         </View>
       )}
-      <View style={[styles.buttonContainer, isLandscape && styles.buttonContainerLandscape,]}>
+      {/* Botões de ação */}
+      <View
+        style={[
+          styles.buttonContainer,
+          isLandscape && styles.buttonContainerLandscape,
+        ]}
+      >
         <TouchableOpacity
           style={[styles.addButton, isLandscape && styles.buttonLandscape]}
           onPress={handleAdd}
@@ -92,9 +105,17 @@ const AddDocument = ({ route, navigation }) => {
           accessibilityLabel="Adicionar"
           accessibilityHint="Toque uma vez para adicionar o documento"
         >
-          <Text style={[styles.addButtonText, isLandscape && styles.buttonSizeLandscape]}>Adicionar</Text>
+          {/* Botão de adicionar documento */}
+          <Text
+            style={[
+              styles.addButtonText,
+              isLandscape && styles.buttonSizeLandscape,
+            ]}
+          >
+            Adicionar
+          </Text>
         </TouchableOpacity>
-
+        {/* Botão para cancelar a adição do documento */}
         <TouchableOpacity
           style={[styles.cancelButton, isLandscape && styles.buttonLandscape]}
           onPress={() => navigation.navigate("Home")}
@@ -103,7 +124,14 @@ const AddDocument = ({ route, navigation }) => {
           accessibilityLabel="Cancelar"
           accessibilityHint="Toque uma vez para cancelar"
         >
-          <Text style={[styles.cancelButtonText, isLandscape && styles.buttonSizeLandscape]}>Cancelar</Text>
+          <Text
+            style={[
+              styles.cancelButtonText,
+              isLandscape && styles.buttonSizeLandscape,
+            ]}
+          >
+            Cancelar
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -114,6 +142,7 @@ const AddDocument = ({ route, navigation }) => {
   );
 };
 
+// Estilos do componente AddDocument
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -191,7 +220,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
-  cancelButtonText:{
+  cancelButtonText: {
     color: "#fff",
     fontSize: 16,
   },

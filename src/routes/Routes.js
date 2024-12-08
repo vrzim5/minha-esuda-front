@@ -12,6 +12,8 @@ import DocumentDetails from "../screens/DocumentDetails";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 
+// Cria a stack e navegação entre as telas
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 

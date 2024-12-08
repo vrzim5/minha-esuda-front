@@ -1,17 +1,26 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Modal,
+} from "react-native";
 
+// Componente ManualInputPopup que exibe um modal para inserção manual de código
 const ManualInputPopup = ({ visible, onSubmit, onCancel }) => {
   const [code, setCode] = useState("");
 
+  // Retorna a interface do componente ManualInputPopup
   return (
-    <Modal
-      transparent={true}
-      visible={visible}
-      animationType="slide"
-    >
+    // Componente Modal para exibir o popup de inserção manual
+    <Modal transparent={true} visible={visible} animationType="slide">
+      {/* Container do modal */}
       <View style={styles.modalContainer}>
+        {/* Conteúdo do modal */}
         <View style={styles.modalContent}>
+          {/* Texto de instrução */}
           <Text style={styles.modalText}>Digite o código do documento</Text>
           <TextInput
             style={styles.input}
@@ -22,11 +31,12 @@ const ManualInputPopup = ({ visible, onSubmit, onCancel }) => {
             accessibilityLabel="Campo de entrada de código"
             accessibilityHint="Digite o código do documento"
           />
+          {/* Botão de envio do código */}
           <TouchableOpacity
             style={styles.submitButton}
             onPress={() => {
-                onSubmit(code);
-                setCode(""); 
+              onSubmit(code);
+              setCode("");
             }}
             accessible={true}
             accessibilityRole="button"
@@ -35,12 +45,13 @@ const ManualInputPopup = ({ visible, onSubmit, onCancel }) => {
           >
             <Text style={styles.buttonText}>Enviar</Text>
           </TouchableOpacity>
+          {/* Botão de cancelamento */}
           <TouchableOpacity
             style={styles.cancelButton}
             onPress={() => {
-                onCancel();
-                setCode(""); 
-              }}
+              onCancel();
+              setCode("");
+            }}
             accessible={true}
             accessibilityRole="button"
             accessibilityLabel="Cancelar"
@@ -54,6 +65,7 @@ const ManualInputPopup = ({ visible, onSubmit, onCancel }) => {
   );
 };
 
+// Estilos do componente ManualInputPopup
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,

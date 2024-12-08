@@ -8,23 +8,37 @@ import {
   useWindowDimensions,
 } from "react-native";
 
+// Componente DeletePopups que exibe um modal de confirmação de exclusão
 const DeletePopups = ({ visible, onDelete, onCancel }) => {
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
 
   return (
-    <Modal 
-    transparent={true} 
-    visible={visible} 
-    animationType="slide"
-    >
+    // Componente Modal para exibir o popup de confirmação
+    <Modal transparent={true} visible={visible} animationType="slide">
+      {/* Container do modal */}
       <View style={styles.modalContainer}>
-        <View style={[ styles.modalContent, isLandscape && styles.modalContentLandscape,]}>
-          <Text style={[styles.modalText, isLandscape && styles.modalTextLandscape]}>
+        {/* Conteúdo do modal */}
+        <View
+          style={[
+            styles.modalContent,
+            isLandscape && styles.modalContentLandscape,
+          ]}
+        >
+          {/* Texto de confirmação */}
+          <Text
+            style={[styles.modalText, isLandscape && styles.modalTextLandscape]}
+          >
             Tem certeza que deseja deletar este documento?
           </Text>
+          {/* Botão de confirmação de exclusão */}
           <TouchableOpacity
-            style={[ styles.confirmDeleteButton, isLandscape && styles.confirmDeleteButtonLandscape,]}
+            style={[
+              styles.confirmDeleteButton,
+              isLandscape && styles.confirmDeleteButtonLandscape,
+            ]}
             onPress={onDelete}
             accessible={true}
             accessibilityRole="button"
@@ -33,8 +47,12 @@ const DeletePopups = ({ visible, onDelete, onCancel }) => {
           >
             <Text style={styles.buttonText}>Deletar</Text>
           </TouchableOpacity>
+          {/* Botão de cancelamento */}
           <TouchableOpacity
-            style={[ styles.cancelDeleteButton, isLandscape && styles.cancelDeleteButtonLandscape,]}
+            style={[
+              styles.cancelDeleteButton,
+              isLandscape && styles.cancelDeleteButtonLandscape,
+            ]}
             onPress={onCancel}
             accessible={true}
             accessibilityRole="button"
@@ -49,6 +67,7 @@ const DeletePopups = ({ visible, onDelete, onCancel }) => {
   );
 };
 
+// Estilos do componente DeletePopups
 const styles = StyleSheet.create({
   modalContainer: {
     flex: 1,

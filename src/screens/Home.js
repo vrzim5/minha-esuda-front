@@ -14,12 +14,15 @@ import Card from "../components/Card";
 import { logoutUser } from "../services/api";
 import { useFocusEffect } from "@react-navigation/native";
 
+// Componente Home que exibe a tela inicial do aplicativo
 const Home = ({ navigation }) => {
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
-  
-  const [documents, setDocuments] = useState([]);
 
+  const [documents, setDocuments] = useState([]);
+  // Hook para obter os documentos do usuário
   useFocusEffect(
     useCallback(() => {
       const fetchDocuments = async () => {
@@ -33,37 +36,45 @@ const Home = ({ navigation }) => {
     }, [])
   );
 
+  // Função para lidar com o logout do usuário
   const handleLogout = async () => {
     await logoutUser();
     navigation.replace("Login");
   };
 
+  // Retorna a interface da tela Home
   return (
     <View style={styles.container}>
+      {/* Cabeçalho com botão de logout */}
       <View style={[styles.header, isLandscape && styles.headerLandscape]}>
-        <TouchableOpacity 
-        style={[styles.logoutButton, isLandscape && styles.logoutButtonLandscape]} 
-        onPress={handleLogout}
+        <TouchableOpacity
+          style={[
+            styles.logoutButton,
+            isLandscape && styles.logoutButtonLandscape,
+          ]}
+          onPress={handleLogout}
         >
-        <FontAwesome 
-        name="sign-out" 
-        size={24} 
-        color="white" 
-        style={styles.icon}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityHint="Toque uma vez para sair da sua conta"
-        />
-      </TouchableOpacity>
-
+          <FontAwesome
+            name="sign-out"
+            size={24}
+            color="white"
+            style={styles.icon}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityHint="Toque uma vez para sair da sua conta"
+          />
+        </TouchableOpacity>
+        {/* Título da tela */}
       </View>
-      <Text style={[styles.title, isLandscape && styles.titleLandscape]}
-      accessible={true} 
-      accessibilityRole="header" 
-      accessibilityLabel="Seus Documentos">
+      <Text
+        style={[styles.title, isLandscape && styles.titleLandscape]}
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel="Seus Documentos"
+      >
         Seus Documentos
       </Text>
-
+      {/* Lista de documentos */}
       {documents.length === 0 ? (
         <View style={styles.placeholder}>
           <Ionicons
@@ -72,7 +83,8 @@ const Home = ({ navigation }) => {
             color="#DB914A"
             style={styles.placeholderIcon}
           />
-          <Text style={styles.placeholderText}
+          <Text
+            style={styles.placeholderText}
             accessible={true}
             accessibilityLabel="Nenhum documento foi adicionado ainda"
           >
@@ -84,7 +96,7 @@ const Home = ({ navigation }) => {
           data={documents}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("DocumentDetails", { item })} 
+              onPress={() => navigation.navigate("DocumentDetails", { item })}
               accessible={true}
               accessibilityRole="button"
               accessibilityLabel={`Documento ${item.name}`}
@@ -96,6 +108,7 @@ const Home = ({ navigation }) => {
           keyExtractor={(item) => item._id}
         />
       )}
+      {/* Botão para adicionar um novo documento */}
       <TouchableOpacity
         style={styles.addButton}
         onPress={() => navigation.navigate("Scan")}
@@ -110,6 +123,7 @@ const Home = ({ navigation }) => {
   );
 };
 
+// Estilos da tela Home
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -138,7 +152,7 @@ const styles = StyleSheet.create({
     transform: [{ translateY: -15 }],
   },
   icon: {
-    transform: [{ rotate: "180deg" }], 
+    transform: [{ rotate: "180deg" }],
   },
   title: {
     fontSize: 27,

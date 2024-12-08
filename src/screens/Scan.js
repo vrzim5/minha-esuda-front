@@ -12,9 +12,12 @@ import { CameraView, Camera } from "expo-camera";
 import { Ionicons } from "@expo/vector-icons";
 import ManualInputPopup from "../components/ManualInputPopup";
 
+// Largura da janela
 const { width } = Dimensions.get("window");
+// Tamanho da câmera
 const CAMERA_SIZE = width * 0.7;
 
+// Componente Scan que exibe a tela de escaneamento de QR code
 const Scan = ({ navigation }) => {
   const { width, height } = useWindowDimensions();
   const isLandscape = width > height;
@@ -22,6 +25,7 @@ const Scan = ({ navigation }) => {
   const [scanned, setScanned] = useState(false);
   const [manualInputVisible, setManualInputVisible] = useState(false);
 
+  // Hook para obter as permissões da câmera
   useEffect(() => {
     const getCameraPermissions = async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -29,12 +33,12 @@ const Scan = ({ navigation }) => {
     };
     getCameraPermissions();
   }, []);
-
+  // Função para lidar com o escaneamento do QR code
   const handleBarcodeScanned = ({ type, data }) => {
     setScanned(true);
     navigation.navigate("AddDocument", { data });
   };
-
+  // Função para lidar com a submissão manual do código
   const handleManualSubmit = (code) => {
     setManualInputVisible(false);
     navigation.navigate("AddDocument", { data: code });
@@ -46,42 +50,56 @@ const Scan = ({ navigation }) => {
   if (hasPermission === false) {
     return <Text>Sem acesso à câmera.</Text>;
   }
-
+  // Tamanho da câmera quando estiver no modo Landscape
   const cameraSize = isLandscape ? width * 0.2 : CAMERA_SIZE;
 
+  // Retorna a interface da tela de escaneamento
   return (
-    <View style={styles.container}> 
+    // Container principal
+    <View style={styles.container}>
+      {/* Cabeçalho com botão de voltar */}
       <View style={[styles.header, isLandscape && styles.headerLandscape]}>
-        <TouchableOpacity 
-        style={styles.backButton} 
-        onPress={() => navigation.replace("Home")}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityLabel="Voltar"
-        accessibilityHint="Toque uma vez para voltar para a tela inicial"
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.replace("Home")}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Voltar"
+          accessibilityHint="Toque uma vez para voltar para a tela inicial"
         >
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
       </View>
-
-      <Text style={[styles.title, isLandscape && styles.titleLandscape]}
-      accessible={true} 
-      accessibilityRole="header"
-      accessibilityLabel="Escaneie o seu documento"
+      {/* Título da tela */}
+      <Text
+        style={[styles.title, isLandscape && styles.titleLandscape]}
+        accessible={true}
+        accessibilityRole="header"
+        accessibilityLabel="Escaneie o seu documento"
       >
         Escaneie o seu documento
       </Text>
-
-      <Text 
+      {/* Descrição da tela */}
+      <Text
         style={[styles.description, isLandscape && styles.descriptionLandscape]}
         accessible={true}
         accessibilityLabel="Escaneie o QR code presente no seu documento físico"
       >
         Escaneie o QR code presente no seu documento
       </Text>
-
-      <View style={[styles.scannerContainer, isLandscape && styles.scannerContainerLandscape]}>
-        <View style={[styles.cameraContainer, { width: cameraSize, height: cameraSize }]}>
+      {/* Container do scanner */}
+      <View
+        style={[
+          styles.scannerContainer,
+          isLandscape && styles.scannerContainerLandscape,
+        ]}
+      >
+        <View
+          style={[
+            styles.cameraContainer,
+            { width: cameraSize, height: cameraSize },
+          ]}
+        >
           <CameraView
             onBarcodeScanned={scanned ? undefined : handleBarcodeScanned}
             barcodeScannerSettings={{
@@ -99,24 +117,34 @@ const Scan = ({ navigation }) => {
             onPress={() => setScanned(false)}
           />
         )}
-
+        {/* Botão para digitar o código manualmente */}
         <TouchableOpacity
-          style={[styles.manualInputButton, isLandscape && styles.manualInputButtonLandscape]}
+          style={[
+            styles.manualInputButton,
+            isLandscape && styles.manualInputButtonLandscape,
+          ]}
           onPress={() => setManualInputVisible(true)}
           accessible={true}
           accessibilityRole="button"
           accessibilityLabel="Digitar o código"
           accessibilityHint="Toque uma vez para digitar o código manualmente"
         >
-          <Text style={[styles.buttonText, isLandscape && styles.buttonTextLandscape]}>Digitar o código</Text>
+          <Text
+            style={[
+              styles.buttonText,
+              isLandscape && styles.buttonTextLandscape,
+            ]}
+          >
+            Digitar o código
+          </Text>
         </TouchableOpacity>
-
+        {/* Componente ManualInputPopup para exibir o modal de entrada manual */}
         <ManualInputPopup
           visible={manualInputVisible}
           onSubmit={handleManualSubmit}
           onCancel={() => setManualInputVisible(false)}
-        />       
-
+        />
+        {/* Botão para cancelar o escaneamento */}
         <TouchableOpacity
           style={styles.cancelButton}
           onPress={() => navigation.goBack()}
@@ -132,6 +160,7 @@ const Scan = ({ navigation }) => {
   );
 };
 
+// Estilos da tela Scan
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -151,7 +180,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     left: 16,
     top: "60%",
-    transform: [{ translateY: -12 }], 
+    transform: [{ translateY: -12 }],
   },
   title: {
     fontSize: 24,

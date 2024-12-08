@@ -17,15 +17,20 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loginUser } from "../services/api";
 import { isValidEmail } from "../utils/date";
 
+// Componente Login que exibe a tela de login
 const Login = ({ navigation }) => {
+  // Hook para obter as dimensões da janela
   const { width, height } = useWindowDimensions();
+  // Verifica se a orientação é paisagem
   const isLandscape = width > height;
 
+  // Estados para armazenar o email, senha e estado de carregamento
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Função para lidar com o login do usuário
   const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Erro", "Por favor, preencha o e-mail e a senha.");
@@ -62,13 +67,17 @@ const Login = ({ navigation }) => {
     }
   };
 
+  // Função para lidar com a recuperação de senha
   const handlePasswordReset = () => {
     Alert.alert("Sucesso", "Um código de recuperação foi enviado.");
     setModalVisible(false);
   };
 
+  // Renderiza a tela de login
   return (
+    // Componente TouchableWithoutFeedback para fechar o teclado ao clicar fora do campo de texto
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* Container principal */}
       <View style={styles.container}>
         {!isLandscape && (
           <View
@@ -76,6 +85,7 @@ const Login = ({ navigation }) => {
             accessible={true}
             accessibilityRole="image"
           >
+            {/* Imagem da logo da Esuda */}
             <Image
               source={require("../assets/LogoEsuda.png")}
               style={styles.overlayImage}
@@ -84,7 +94,7 @@ const Login = ({ navigation }) => {
             />
           </View>
         )}
-
+        {/* Container do formulário */}
         <View style={styles.formContainer}>
           <Text
             style={[styles.title, isLandscape && styles.titleLandscape]}
@@ -94,6 +104,7 @@ const Login = ({ navigation }) => {
           >
             Logar
           </Text>
+          {/* Campo de entrada para o email e senha */}
           <TextInput
             style={[styles.input, isLandscape && styles.inputLandscape]}
             placeholder="Ex: 00000000@esuda.edu.br"
@@ -113,6 +124,7 @@ const Login = ({ navigation }) => {
             accessibilityLabel="Senha"
             accessibilityHint="Digite sua senha"
           />
+          {/* Botão de login */}
           <TouchableOpacity
             style={[styles.button, isLandscape && styles.buttonLandscape]}
             onPress={handleLogin}
@@ -122,13 +134,16 @@ const Login = ({ navigation }) => {
             accessibilityLabel="Entrar"
             accessibilityHint="Toque uma vez para fazer login"
           >
+            {/* Texto do botão de login */}
             <Text style={styles.buttonText}>
               {loading ? "Carregando..." : "Entrar"}
             </Text>
           </TouchableOpacity>
 
+          {/* Indicador de carregamento */}
           {loading && <ActivityIndicator size="large" color="#1e90ff" />}
 
+          {/* Botão para recuperar senha */}
           <TouchableOpacity
             style={styles.forgotPasswordButton}
             onPress={() => setModalVisible(true)}
@@ -139,6 +154,7 @@ const Login = ({ navigation }) => {
           >
             <Text style={styles.forgotPasswordText}>Esqueci minha senha</Text>
           </TouchableOpacity>
+          {/* Modal para recuperação de senha */}
           <Modal
             transparent={true}
             visible={modalVisible}
@@ -208,6 +224,7 @@ const Login = ({ navigation }) => {
   );
 };
 
+// Estilos da tela de login
 const styles = StyleSheet.create({
   container: {
     flex: 1,
