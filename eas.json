@@ -1,17 +1,26 @@
 {
   "cli": {
-    "version": ">= 14.0.2",
+    "version": ">= 13.4.2",
     "appVersionSource": "remote"
   },
   "build": {
     "development": {
+      "env": {
+        "API_URL": "https://dne-digital-js-backend.onrender.com"
+      },
       "developmentClient": true,
       "distribution": "internal"
     },
     "preview": {
+      "env": {
+        "API_URL": "https://dne-digital-js-backend.onrender.com"
+      },
       "distribution": "internal"
     },
     "production": {
+      "env": {
+        "API_URL": "https://minha-esuda-back.onrender.com"
+      },
       "autoIncrement": true
     }
   },
