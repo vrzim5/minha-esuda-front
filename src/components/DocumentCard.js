@@ -178,7 +178,7 @@ const styles = StyleSheet.create({
   },
   cardLandscape: {
     flexDirection: "row",
-    height: 250,
+    height: 240,
     width: "90%",
   },
   backgroundImage: {
@@ -228,15 +228,15 @@ const styles = StyleSheet.create({
     right: 5,
   },
   yearImage: {
-    width: 100,
-    height: 50,
+    width: 85,
+    height: 45,
     position: "absolute",
     bottom: 15,
-    right: 15,
+    right: 18,
   },
   infoContainer: {
     position: "absolute",
-    bottom: 40,
+    bottom: 48,
     left: 20,
   },
   infoContainerLandscape: {
@@ -250,6 +250,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginBottom: 8,
+    lineHeight: 18,
   },
   boldText: {
     fontWeight: "bold",

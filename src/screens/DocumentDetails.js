@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
   },
   titleLandscape: {
     fontSize: 20,
-    marginBottom: 0,
-    marginTop: 15,
+    marginBottom: -10,
+    marginTop: 10,
   },
   cardContainer: {
     flex: 1,
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
   cardContainerLandscape: {
     flex: 1,
     width: "100%",
-    paddingHorizontal: 80,
+    paddingHorizontal: 70,
     marginBottom: 10,
   },
   deleteButton: {
