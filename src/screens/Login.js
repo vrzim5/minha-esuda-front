@@ -50,8 +50,8 @@ const Login = ({ navigation }) => {
       const normalizedEmail = email.toLowerCase();
       const response = await loginUser(normalizedEmail, password);
       if (response.success) {
-        await AsyncStorage.setItem("token", response.data.token);
-        console.log("Token armazenado:", response.data.token);
+   //     await AsyncStorage.setItem("token", response.data.token);
+   //     console.log("Token armazenado:", response.data.token);
         navigation.replace("Home");
       } else {
         Alert.alert("Falha no Login", response.message);

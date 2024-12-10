@@ -26,9 +26,10 @@ const Home = ({ navigation }) => {
   useFocusEffect(
     useCallback(() => {
       const fetchDocuments = async () => {
-        const documents = await AsyncStorage.getItem("documents");
-        if (documents) {
-          setDocuments(JSON.parse(documents));
+        const user = JSON.parse(await AsyncStorage.getItem('user'));
+        console.log("user is here: ", user);
+        if (user.documents) {
+          setDocuments(user.documents);
         }
       };
       fetchDocuments();

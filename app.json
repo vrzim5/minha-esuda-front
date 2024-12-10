@@ -39,7 +39,10 @@
       ]
     ],
     "extra": {
-      "apiUrl": "http://localhost:3000"
-    }    
+      "apiUrl": "http://localhost:3000",
+      "eas": {
+        "projectId": "698bbb5f-1ad2-41c1-a196-450c97cd963d"
+      }
+    }
   }
 }
