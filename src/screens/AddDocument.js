@@ -21,6 +21,7 @@ const AddDocument = ({ route, navigation }) => {
 
   // Hook para armazenar as informações do documento
   const [documentInfo, setDocumentInfo] = useState(null);
+
   useEffect(() => {
     const fetchDocumentData = async () => {
       const parsedData = await parseDocumentData(data);
@@ -51,8 +52,14 @@ const AddDocument = ({ route, navigation }) => {
     try {
       const documentList =
         JSON.parse(await AsyncStorage.getItem("documents")) || [];
-      documentList.push(documentInfo);
-      await AsyncStorage.setItem("documents", JSON.stringify(documentList));
+      const user = JSON.parse(await AsyncStorage.getItem("user"));
+      if (user.documents.some((doc) => doc._id === documentInfo._id)) {
+        console.log("Documento já existe!");
+        navigation.navigate("Home");
+        return;
+      }
+      user.documents.push(documentInfo);
+      await AsyncStorage.setItem("user", JSON.stringify(user));
       navigation.navigate("Home");
     } catch (error) {
       console.error("Error saving document", error);
