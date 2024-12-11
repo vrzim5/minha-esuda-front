@@ -1,64 +1,48 @@
 # Aplicativo Mobile Minha Esuda para Carteirinha de Estudante Institucional
 
-Este projeto visa criar um aplicativo móvel para disponibilizar a carteirinha de estudante institucional da Faculdade ESUDA diretamente no smartphone dos alunos. O aplicativo combina tecnologias de backend, desenvolvimento mobile e design UI/UX para oferecer uma solução completa, funcional e centrada no usuário. 
+Este projeto visa criar um aplicativo móvel para disponibilizar a carteirinha de estudante institucional da Faculdade ESUDA diretamente no smartphone dos alunos. O aplicativo combina tecnologias de desenvolvimento mobile e design UI/UX para oferecer uma solução completa, funcional e centrada no usuário.
 
-## 🎯 Objetivo  
+## 🎯 Objetivo
 
-Desenvolver uma plataforma móvel que permita:  
-- Acesso virtual à carteirinha de estudante.  
-- Integração com backend para gerenciamento de dados dos alunos.  
-- Experiência de usuário intuitiva, responsiva e acessível. 
+Desenvolver uma plataforma móvel que permita:
 
-## 🛠️ Tecnologias e Ferramentas  
+- Acesso virtual à carteirinha de estudante.
+- Integração com backend para gerenciamento de dados dos alunos.
+- Experiência de usuário intuitiva, responsiva e acessível.
 
-- **Backend**:  
-  - Node.js, Express  
-  - Banco de dados: MongoDB
-  - ORM: Mongoose  
-  - Autenticação: JWT  
+## 🛠️ Tecnologias e Ferramentas
 
-- **Mobile**:  
-  - React Native, Expo  
-  - Leitura de QR Code: `expo-camera`  
+- **Mobile**:
+  - React Native
+  - Expo
+  - AsyncStorage
+  - Axios
 
-## ⚙️ Funcionalidades  
-1. **Leitura de QR Code**  
-   - Vinculação da carteirinha física ao perfil do aluno.  
+## 🚀 Como Instalar e Usar
 
-2. **Autenticação de Usuários**  
-   - Cadastro via e-mail institucional e senha.  
-   - Recuperação de senha por e-mail.  
-   - Segurança com JWT.  
+1. Clone este repositório:
 
-3. **Exibição de Carteirinha Virtual**  
-   - Exibição de dados da carteirinha
-   - Layout visualmente atraente e legível.  
+```bash
+git clone https://github.com/JulliaAP/minha-esuda-front.git
+```
 
-4. **Backend Robust**  
-   - Armazenamento e gerenciamento seguro dos dados.  
-   - API REST para autenticação e consulta de informações.  
-
-5. **Design Responsivo e Acessível**  
-   - Compatível com diferentes tamanhos de tela e dispositivos.
-   - Compatível com modo retrato e paisagem  
-   - Suporte a leitores de tela e navegação por teclado.  
-
-## 🚀 Como Instalar e Usar  
-
-1. Clone este repositório:  
-   ```bash  
-   git clone https://github.com/JulliaAP/minha-esuda-back.git
-   ```
 2. Instale as dependências:
-  ```bash  
-  npm install  
-  ```
+
+```bash
+npm install
+```
+
 3. Configure o arquivo .env com as variáveis de ambiente necessárias.
 
+```bash
+API_URL=http://localhost:3000
+```
+
 4. Inicie o aplicativo
-  ```bash  
-  npm start  
-  ```
+
+```bash
+npm start
+```
 
 ## 🤝 Contribuição
 
@@ -69,7 +53,6 @@ Contribuições são sempre bem-vindas!
 3. Commit suas mudanças (`git commit -m 'Adiciona nova feature'`).
 4. 4. Faça o push para a branch (`git push origin feature/nova-feature`).
 5. Abra um Pull Request com suas alterações.
-
 
 ## 📜 Licença
 
