@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
   ActivityIndicator,
   Image,
 } from "react-native";
@@ -19,40 +18,48 @@ const Signup = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleSignup = async () => {
+    setErrorMessage("");  // Limpa mensagens anteriores
+
     if (!name || !email || !password || !confirmPassword) {
-      Alert.alert("Erro", "Por favor, preencha todos os campos.");
+      setErrorMessage("Por favor, preencha todos os campos.");
       return;
     }
 
     if (!isValidEmail(email)) {
-      Alert.alert("Erro", "Esse e-mail não é um e-mail institucional Esuda.");
+      setErrorMessage("Esse e-mail não é um e-mail institucional Esuda.");
       return;
     }
 
     if (password.length < 8) {
-      Alert.alert("Erro", "A senha deve conter pelo menos 8 caracteres.");
+      setErrorMessage("A senha deve conter pelo menos 8 caracteres.");
+      return;
+    }
+
+    if (password.length > 20) {
+      setErrorMessage("A senha deve conter no maximo 20 caracteres.");
       return;
     }
 
     if (!/[!@#$%^&*()\-_=+]/.test(password)) {
-      Alert.alert("Erro", "A senha deve conter pelo menos 1 caractere especial.");
+      setErrorMessage("A senha deve conter pelo menos 1 caractere especial.");
       return;
     }
 
     if (!/[0-9]/.test(password)) {
-      Alert.alert("Erro", "A senha deve conter pelo menos 1 caractere numérico.");
+      setErrorMessage("A senha deve conter pelo menos 1 caractere numérico.");
       return;
     }
 
     if (!/[A-Z]/.test(password)) {
-      Alert.alert("Erro", "A senha deve conter pelo menos 1 caractere maiúsculo.");
+      setErrorMessage("A senha deve conter pelo menos 1 caractere maiúsculo.");
       return;
     }
 
     if (password !== confirmPassword) {
-      Alert.alert("Erro", "As senhas não coincidem.");
+      setErrorMessage("As senhas não coincidem.");
       return;
     }
 
@@ -61,14 +68,14 @@ const Signup = ({ navigation }) => {
     try {
       const response = await registerUser(email, password, name);
       if (response.success) {
-        Alert.alert("Cadastro realizado com sucesso", "Agora você pode fazer login.");
+        setErrorMessage("Cadastro realizado com sucesso. Agora você pode fazer login.");
         navigation.navigate("Login");
       } else {
-        Alert.alert("Falha no cadastro", response.message);
+        setErrorMessage(response.message || "Falha no cadastro.");
       }
     } catch (error) {
-      Alert.alert("Erro", "Ocorreu um erro ao tentar realizar o cadastro.");
       console.error(error);
+      setErrorMessage("Ocorreu um erro ao tentar realizar o cadastro.");
     } finally {
       setLoading(false);
     }
@@ -116,6 +123,10 @@ const Signup = ({ navigation }) => {
           secureTextEntry
         />
 
+        {errorMessage ? (
+          <Text style={styles.errorText}>{errorMessage}</Text>
+        ) : null}
+
         <TouchableOpacity
           style={styles.button}
           onPress={handleSignup}
@@ -142,11 +153,11 @@ const Signup = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#DB914A",  // Laranja de fundo
+    backgroundColor: "#DB914A",
   },
   logoContainer: {
     alignItems: "center",
-    marginTop: 60,   // Espaçamento para não sobrepor a logo
+    marginTop: 60,
     marginBottom: 20,
   },
   logo: {
@@ -156,12 +167,11 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     flex: 1,
-    backgroundColor: "#fff",    // Cartão branco como antes
-
+    backgroundColor: "#fff",
     borderTopRightRadius: 50,
     paddingHorizontal: 20,
     paddingTop: 30,
-    paddingBottom: 40, // Garante que o branco vá até o final da tela
+    paddingBottom: 40,
   },
   title: {
     fontSize: 28,
@@ -203,6 +213,13 @@ const styles = StyleSheet.create({
   },
   loginLink: {
     color: "#DB914A",
+    fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    marginTop: 10,
+    marginBottom: 10,
+    textAlign: "center",
     fontWeight: "bold",
   },
 });
