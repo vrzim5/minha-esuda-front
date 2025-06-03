@@ -1,152 +1,120 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  useWindowDimensions,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, SafeAreaView, Platform, KeyboardAvoidingView, Dimensions } from "react-native";
 
-// Componente GetStarted que exibe a tela inicial do aplicativo
+const { width } = Dimensions.get("window");
+
+// Função utilitária para ajustar tamanho conforme largura da tela
+const responsiveFontSize = (min, max) => {
+  const scaled = width * 0.78;  // 78% da largura da tela
+  return Math.min(Math.max(scaled, min), max);
+};
+
 const GetStarted = ({ navigation }) => {
-  // Hook para obter as dimensões da janela
-  const { width, height } = useWindowDimensions();
-  // Verifica se a orientação é paisagem
-  const isLandscape = width > height;
-
-  // Retorna a interface da tela inicial
   return (
-    <View style={[styles.container, isLandscape && styles.containerLandscape]}>
-      {/* Container do título */}
-      <View
-        style={[
-          styles.titleContainer,
-          isLandscape && styles.titleContainerLandscape,
-        ]}
-        accessible={true}
-        accessibilityRole="header"
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === "ios" ? "padding" : undefined}
       >
-        {/* Título da tela */}
-        <Text
-          style={[styles.title, isLandscape && styles.titleLandscape]}
-          accessibilityLabel="Bem-vindo(a)"
-        >
-          Bem-vindo(a) ao Minha Esuda
-        </Text>
-      </View>
+        <ScrollView contentContainerStyle={styles.container}>
+          {/* Título */}
+          <View style={styles.titleContainer} accessible={true} accessibilityRole="header">
+            <Text 
+              style={[styles.title, { fontSize: responsiveFontSize(24, 40) }]} 
+              accessibilityLabel="Bem-vindo(a)"
+            >
+              Bem-vindo(a)
+            </Text>
+            <Text 
+              style={[styles.title, { fontSize: responsiveFontSize(24, 40) }]} 
+              accessibilityLabel="ao Minha Esuda"
+            >
+              ao Minha Esuda
+            </Text>
+          </View>
 
-      {/* Imagem de uma carteira estudantil */}
-      <Image
-        source={require("../assets/carteirinha.png")}
-        style={[styles.image, isLandscape && styles.imageLandscape]}
-        accessible={true}
-        accessibilityLabel="Imagem de uma carteira estudantil"
-      />
-      {/* Subtítulo da tela */}
-      <Text
-        style={[styles.subtitle, isLandscape && styles.subtitleLandscape]}
-        accessible={true}
-        accessibilityLabel="Sua carteira estudantil toda digital"
-      >
-        Sua carteira estudantil toda digital
-      </Text>
+          {/* Imagem da carteirinha (logo) */}
+          <Image
+            source={require('../assets/carteirinha.png')}
+            style={styles.image}
+            accessible={true}
+            accessibilityLabel="Imagem de uma carteira estudantil"
+          />
 
-      {/* Botão para ir para a tela de login */}
-      <TouchableOpacity
-        style={[styles.button, isLandscape && styles.buttonLandscape]}
-        onPress={() => navigation.navigate("Login")}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityLabel="Começar"
-        accessibilityHint="Toque uma vez para ir para a tela de cadastro"
-      >
-        <Text
-          style={[styles.buttonText, isLandscape && styles.buttonTextLandscape]}
-        >
-          Começar
-        </Text>
-      </TouchableOpacity>
-    </View>
+          {/* Texto */}
+          <Text style={styles.subtitle} accessible={true} accessibilityLabel="Sua carteira estudantil toda digital">
+            Sua carteira estudantil toda digital
+          </Text>
+
+          {/* Botão Começar */}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate("Signup")}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Começar"
+            accessibilityHint="Toque uma vez para ir para a tela de cadastro"
+          >
+            <Text style={styles.buttonText}>Começar</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
-// Estilos da tela GetStarted
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    padding: 20,
     backgroundColor: "#DB914A",
   },
-  containerLandscape: {
+  flex: {
+    flex: 1,
+  },
+  container: {
+    flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
   titleContainer: {
     width: "100%",
     alignItems: "flex-start",
-    marginTop: "30%",
-    marginBottom: -80,
-  },
-  titleContainerLandscape: {
-    width: "100%",
-    alignItems: "center",
-    marginTop: 0,
-    marginBottom: 20,
+    marginBottom: 12,
   },
   title: {
-    fontSize: 50,
     fontWeight: "bold",
     color: "#fff",
     textAlign: "left",
   },
-  titleLandscape: {
-    fontSize: 30,
-    marginBottom: -10,
-    textAlign: "center",
-  },
   image: {
-    width: 500,
-    height: 500,
+    width: "70%",
+    maxWidth: 250,
+    maxHeight: 250,
     resizeMode: "contain",
-    marginBottom: -120,
-  },
-  imageLandscape: {
-    width: 400,
-    height: 400,
-    marginBottom: -100,
-    marginTop: -100,
+    marginVertical: 12,
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 14,
     color: "#fff",
     textAlign: "center",
-    marginBottom: 90,
-  },
-  subtitleLandscape: {
-    fontSize: 16,
-    marginBottom: 20,
+    marginVertical: 12,
+    maxWidth: "90%",
+    flexShrink: 1,
   },
   button: {
     backgroundColor: "#61B375",
-    paddingVertical: 15,
-    paddingHorizontal: 80,
-    borderRadius: 50,
-  },
-  buttonLandscape: {
-    paddingVertical: 8,
-    paddingHorizontal: 40,
+    width: "80%",
+    paddingVertical: 12,
+    borderRadius: 25,
+    alignItems: "center",
+    marginTop: 16,
   },
   buttonText: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
-    textAlign: "center",
-  },
-  buttonTextLandscape: {
-    fontSize: 15,
   },
 });
 
